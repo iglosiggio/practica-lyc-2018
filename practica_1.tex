@@ -55,9 +55,12 @@
 \setlength\parindent{0pt}
 \setlength{\parskip}{3mm}
 
-\newcommand{\desarrollo}[2]{
+\newcommand{\desarrollo}[1]{
 
-\hspace{2em}\parbox{\textwidth}{#1}
+    \hspace{2em}
+    \begin{minipage}{\textwidth}
+        #1
+    \end{minipage}
 
 }
 \newcommand{\nat}{\mathbb{N}}
@@ -79,10 +82,7 @@
 
 \subsection{Mostrar que, dado un $k$ fijo, la función constante $f(x)=k$ puede definirse usando las funciones iniciales y composición (sin usar recursión primitiva)}
 
-Podemos empezar bien qué funciones nos piden, si $k = 0$  entonces $f_0(x)=n(x)$ (con $n$ la función constante $0$, que es primitiva).
-Si $k = 1$ entonces $f_1 = s(f_0(x))$, que sabemos que es primitiva recursiva porque lo hicimos una composición válida.
-Podemos intentar plasmar entonces estas funciones que nos piden en búqueda de un patrón: \\
-
+Podemos empezar bien qué funciones nos piden, si $k = 0$  entonces $f_0(x)=n(x)$ (con $n$ la función constante $0$, que es primitiva). Si $k = 1$ entonces $f_1 = s(f_0(x))$, que sabemos que es primitiva recursiva porque lo hicimos una composición válida. Podemos intentar plasmar entonces estas funciones que nos piden en búqueda de un patrón:
 \desarrollo{
 \begin{tabular}{lll}
 $k$     & $f_k(x)$                 & Expresión expandida \\ \hline
@@ -92,22 +92,19 @@ $k = 2$ & $f_2(x) = s(f_1(x))$     & $s(s(n(x))$ \\
 $k = n$ & $f_n(x) = s(f_{n-1}(x))$ & $s(s(...s(n(x))))$ \\
 \end{tabular}
 }
-
-Cómo podemos ver, construir la función constantemente $k$ sólo requiere de aplicar $s(x)$ $k$veces sobre $n(x)$. $\square$
+Cómo podemos ver, construir la función constantemente $k$ sólo requiere de aplicar $s(x)$ $k$veces sobre $n(x)$.
 
 \subsection{Probar que las siguientes funciones son primitivas recursivas, mostrando que pueden obtenerse a partir de las funciones iniciales usando composición t/o recursión primitiva:}
 
 \subsubsection{$f_1(x,y)=x+y$}
 
 Tomamos la estructura de la recursión primitiva:
-
 \desarrollo{$
 f(x_1,...,x_n,0)   = h(x_1,...,x_n) \\
 f(x_1,...,x_n,t+1) = g(f(x_1,...,x_n,t),x_1,...,x_n,t)
 $}
 
 Con esto tenemos que elegir una $h(x)$ y una $g(n,x,t)$ que nos construyan la suma y copypastear cómo corresponda:
-
 \desarrollo{$
 f_1(x,0)   = u^1_1(x) \\
 f_1(x,t+1) = g(f_1(x,t),x,t) \\
@@ -115,7 +112,6 @@ g(n,x,t)   = s(u^3_1(n,x,t))
 $}
 
 ¿No queda claro por qué funciona? Hagamos un par de reemplazos a ver que pasa.
-
 \desarrollo{$
 g(n,x,t)   = s(u^3_1(n,x,t)) = s(n) \\
 f_1(x,0)   = u^1_1(x) = x \\
@@ -123,7 +119,6 @@ f_1(x,t+1) = g(f_1(x,t),x,t) = s(f_1(x,t))
 $}
 
 Ajá!
-
 \desarrollo{
 \begin{tabular}{m{5cm}|l}
 Nuestros reemplazos & Una forma de describir la suma \\ \hline \\[-7pt]
@@ -145,7 +140,6 @@ Bueno, con este truco vamos a meterle a todo el resto de los ejercicios de este 
 \subsubsection{$f_2(x,y)=x \cdot y$}
 
 Bien, pongamos de vuelta en práctica lo que acabamos de hacer. Si tu intuición te llama a que vamos a tener que usea $f_1(x,y)$ acá estás más que en lo cierto. Pero primero plantiemos una función partida común y corriente a ver cómo vamos desde ahí a nuestra recursión primitiva:
-
 \desarrollo{$
 f_2(x,y) = 
 \begin{cases}
@@ -155,7 +149,6 @@ f_2(x,y) =
 $}
 
 Y de ahí salimos a buscar nuestro $h(x)$ y nuestro $g(n,x,t)$:
-
 \desarrollo{$
 f_2(x,0)   = n(x) = 0 \\
 f_2(x,t+1) = g(f_2(x,t),x,t) \\
@@ -163,7 +156,6 @@ g(n,x,t)   = f_1(u^3_2(n,x,t),u^3_1(n,x,t)) = x + n
 $}
 
 Y para estar del todo seguros hacemos todos los reemplazos cómo la otra vez:
-
 \desarrollo{$
 f_2(x,0)   = 0\\
 f_2(x,t+1) = x + f_2(x,t)
@@ -174,7 +166,6 @@ Justo lo que buscábamos.
 \subsubsection{$f_3(x,y)=x^y$}
 
 Bueno, supongo que ya te diste cuenta de cuál es el patrón, te paso cuál es la $h(x)$ y la $g(n,x,t)$:
-
 \desarrollo{$
 h(x)     = s(n(x)) = 1 \\
 g(n,x,t) = f_2(u^3_2(n,x,t), u^3_1(n,x,t) = x \cdot n \\
@@ -186,7 +177,6 @@ $}
 \subsubsection{$f_4(x,y)=x^{x^{\cdot^{\cdot^{\cdot^{^{x}}}}}}$}
 
 Observación: se asume que $f_4(x,0)=1$
-
 \desarrollo{$
 h(x) = s(n(x)) = 1 \\
 g(n,x,t) = f_3(u^3_2(n,x,t),u^3_1(n,x,t)) = x^n \\
@@ -198,7 +188,6 @@ $}
 \subsubsection{$g_1(x)=\dot-1$}
 
 Cómo sólo estamos operando en los $\nat$ el predecesor de 0 es 0. Una cosa a notar es que (según la teórica, filmina 25, primera clase de computabilidad) ``En este contexto, una función 0-aria es una constante $k$. Si $f$ es 1-aria y $t=0$ entonces $h(t)=k=s^{(k)}(n(t))$.".
-
 \desarrollo{$
 g_1(0) = n(0)\\
 g_1(t+1) = u^1_1(t)
@@ -207,7 +196,6 @@ $}
 \subsubsection{$g_2(x,y)=x\dot-y$}
 
 Observación:
-
 \desarrollo{$
 x\dot-y =
 \begin{cases}
@@ -217,14 +205,12 @@ x\dot-y =
 $}
 
 Bueno, entonces podemos empezar a intentar construir la resta.
-
 \desarrollo{$
 f(x) = u^1_1(x) = x \\
 g(n, x, t) = g_1(u^3_1(n,x,t)) = n \dot- 1
 $}
 
-¿Está bien esto? Probemos algunos números
-
+¿Está bien esto? Probemos algún número:
 \desarrollo{$
 g_2(5, 3) = g(g_2(5, 2), 5, 3) = g_2(5, 2) - 1 \\
 g_2(5, 3) = g(g_2(5, 1), 5, 3) - 1 = g_2(5, 1) - 1 - 1 \\
@@ -238,14 +224,12 @@ $}
 \subsubsection{$g_3(x,y)=max\{x,y\}$}
 
 Cómo operamos con los naturales sabemos que si $x < y$ entonces $x - y = 0$ podemos usar la recursión primitiva para construir una función de decisión.
-
 \desarrollo{$
 d(x, y, 0) = u^2_2(x, y) = y \\
 d(x, y, t+1) = u^4_2(d(x, y, t), x, y, t) = x
 $}
 
-Ahora, esto no es $g_3(x,y)$ pero está peligrosamente cerca, podemos usar la composición para finalmente contruirlo.
-
+Ahora, esto no es $g_3(x,y)$ pero está peligrosamente cerca, podemos usar la composición para finalmente construirlo.
 \desarrollo{$
 g_3(x,y) = d(u^2_1(x, y), u^2_2(x, y), g_2(x,y)) = d(x, y, x \dot- y)
 $}
@@ -253,7 +237,6 @@ $}
 \subsubsection{$g_4(x,y)=min\{x,y\}$}
 
 La idea es la misma que recién, pero construímos parametrizamos la decisión al revés:
-
 \desarrollo{$
 g_3(x,y) = d(u^2_2(x,y), u^2_1(x,y), g_2(x,y)) = d(y, x, x \dot- y)
 $}
@@ -275,7 +258,6 @@ Y $\Ccur_c$ aquella que si $f, g_1, ..., g_m$ están en $\Ccur_c$, entonces $h(x
 El enunciado nos propone demostrar que $\Ccur_c$ sólo tiene funciones que devuelven constantes y funciones que suman constantes a \emph{uno} de sus parámetros (y siempre el mismo).
 
 Demostrar la vuelta es particularmente fácil, primero construyo la función 1-aria que suma $k$ con el método del primer ejercicio (teniendo $u^1_1(x)$ cómo caso base en lugar de $n(x)$ y la llamo $k(x)$. También construyo una función constantemente 0 que tome $n$ argumentos.
-
 \desarrollo{$
 k(x) = s(...s(u^1_1(x))) \text{\hspace{7em} Nota: si $k=0$ entonces } k(x)=u^1_1(x) \\
 z(x_1, ...., x_n) = n(u^n_1(x_1, ..., x_n))
@@ -285,16 +267,13 @@ Ahora sólo tengo que cubrir cada caso:
 \begin{itemize}
 \item Si tengo una $f: \nat^n \to \nat$ que es constantemente $k$.
 \desarrollo{$ f(x_1, ..., x_n) = k(z(x_1, ..., x_n)) $}
-
 \item Si tengo una $f: \nat^n \to \nat$ que es constantemente $x_i + k$.
 \desarrollo{$ f(x_1, ..., x_n) = k(u^n_i(x_1,...,x_n)) $}
-
 \end{itemize}
 
 Cómo sólo hice composiciones para construir la $f$ entonces esto debería bastar para demostrar que las funciones constantes y las que suman constantes pertenecen todas a $\Ccur_c$.
 
 Para demostrar la ida necesito asegurarme que las funciones en $\Ccur_c$ sólo pueden ser constantes (o sumar constantes). Si empezamos examinando los casos base...
-
 \desarrollo{
 \begin{tabular}{lll}
 Primitiva                  & Forma                        & $k$ \\ \hline \\[-1em]
@@ -305,20 +284,17 @@ $u^n_i(x_1, ..., x_n)=x_i$ & $f(x_1, ..., x_n) = x_i + k$ & $0$
 }
 
 ...tenemos que todos ellos tienen o la forma $k$ o la de $x_i + k$. Ahora examinemos nuestra regla de composición:
-
 \desarrollo{
 Sea:
 \desarrollo{$
 f: \nat^m \to \nat \\
 g_1, ..., g_m: \nat^n \to \nat
-$\\}
-
+$}
 Podemos construir $h: \nat^n \to \nat$ de la siguiente manera:
 \desarrollo{$h(x_1, ..., x_n) = f(g_1(x_1, ..., x_n), ..., g_m(x_1, ..., g_n))$}
 }
 
 Puedo tomar $f_1, ..., f_n$ que tengan la forma $k$ o la forma $x_i + k$  y analizar qué pasa si las compongo (paso inductivo).
-
 \desarrollo{
 \begin{tabular}{l|l|c|l|c}
 & \multicolumn{2}{c|}{$f_i(x_1, ..., x_n) = k$} & \multicolumn{2}{c}{$f_i(x_1, ..., x_n) = x_j + k$} \\ \cline{2-5}
@@ -380,14 +356,12 @@ $f_6(x,y)=
 \end{tabular}
 
 Y para hacernos la vida más fácil vamos a construir $\alpha(x)$ que es la negación lógica en nuestro modelo.
-
 \desarrollo{$
 \alpha(0) = n(0) \\
 \alpha(t+1) = s(n(t))
 $}
 
 ¡Y ahora sí!
-
 \desarrollo{$
 f_1(x,y)=\alpha(x\dot-y) \\
 f_2(x,y)=\alpha(y\dot-x) \\
@@ -416,7 +390,6 @@ Observar que $h$ queda completamente determinada por este esquema.
 \emph{Nota:} Al ser $p_1,...,p_k$ disjuntos no sucede $p_i(a_1,...,a_n) = p_j(a_1,...,a_n) = 1$ con $i \neq j$ para ningún $(a_1,...,a_n) \in \nat^n$.
 
 Si podemos resolverlo para el caso de $k=1$ entonces podremos resolverlo para cualquier $k$ arbitrario. Podemos construir $h(x_1,...,x_n)$ de la siguiente forma:
-
 \desarrollo{$
 h(x_1,...,x_n) = h_1(x_1,...,x_n) \\
 h_i(x_1,...,x_n) =
@@ -429,7 +402,6 @@ h_{k+1}(x_1,...,x_n) = g(x_1,...,x_n)
 $}
 
 Ahora sólo queda resolverlo para el caso de 2. ¡Cosa que ya hicimos en el ejercicio 2 con $max\{x,y\}$ y $min\{x,y\}$! Repasemos esa solución: construimos una función de decisión $d_i$ y la encapsulamos para construir el $h_i$.
-
 \desarrollo{$
 d_i(x_1,...,x_n,0) = f_i(x_1,...,x_n) \\
 d_i(x_1,...,x_n,t+1) = h_{i+1}(x_1,...,x_n) \\ \\
@@ -438,7 +410,6 @@ h_{k+1}(x_1,...,x_n) = g(x_1,...,x_n)
 $}
 
 Ahora tenemos todo listo, sólo queda enunciar a nuestro $h$:
-
 \desarrollo{$h(x_1,...,x_n) = h_1(x_1,...,x_n)$}
 
 \end{document}
