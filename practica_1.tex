@@ -49,22 +49,30 @@
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
+\usepackage{calc}
+\usepackage{lmodern}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{mathdots}
 \setlength\parindent{0pt}
 \setlength{\parskip}{3mm}
 
-\newcommand{\desarrollo}[1]{
+\newlength{\desarrollolen}
+    \setlength{\desarrollolen}{\textwidth}
+\newcommand{\desarrollo}[2][3em]{
 
     \hspace{2em}
-    \begin{minipage}{\textwidth}
-        #1
+    \addtolength{\desarrollolen}{-#1}
+    \begin{minipage}{\desarrollolen}
+        #2
     \end{minipage}
+    \addtolength{\desarrollolen}{#1}
 
 }
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\Ccur}{\mathcal{C}}
+
+\overfullrule=2em
 
 %%% END Article customizations
 
@@ -251,7 +259,7 @@ $s(x)=x+1$, &
 $u^n_i(x_1,...x_n)=x_i$ para cada $n \in \nat$ e $i \in \{1, ..., n\}$
 \end{tabular}
 
-Y $\Ccur_c$ aquella que si $f, g_1, ..., g_m$ están en $\Ccur_c$, entonces $h(x_1, ..., x_n) = f(g_1(x_1, ..., x_n), ..., g_m(x_1, ..., x_n))$ también lo está.
+Y $\Ccur_c$ aquella que si $f, g_1, ..., g_m$ están en $\Ccur_c$, entonces $h(x_1, ..., x_n) = f(g_1(x_1, ..., x_n), ...,\\ g_m(x_1, ..., x_n))$ también lo está.
 
 \subsubsection{Demostrar que para toda $f: \nat^n \to \nat$, $f$, está en $\Ccur_c$ sii existe $k \geq 0$ tal que, o bien sucede $f(x_1, ..., x_n) = k$, o bien para algún $i$ fijo, se tiene $f(x_1, ..., x_n) = x_i + k$.}
 
@@ -266,9 +274,9 @@ $}
 Ahora sólo tengo que cubrir cada caso:
 \begin{itemize}
 \item Si tengo una $f: \nat^n \to \nat$ que es constantemente $k$.
-\desarrollo{$ f(x_1, ..., x_n) = k(z(x_1, ..., x_n)) $}
+\desarrollo[6em]{$ f(x_1, ..., x_n) = k(z(x_1, ..., x_n)) $}
 \item Si tengo una $f: \nat^n \to \nat$ que es constantemente $x_i + k$.
-\desarrollo{$ f(x_1, ..., x_n) = k(u^n_i(x_1,...,x_n)) $}
+\desarrollo[6em]{$ f(x_1, ..., x_n) = k(u^n_i(x_1,...,x_n)) $}
 \end{itemize}
 
 Cómo sólo hice composiciones para construir la $f$ entonces esto debería bastar para demostrar que las funciones constantes y las que suman constantes pertenecen todas a $\Ccur_c$.
@@ -295,16 +303,17 @@ Podemos construir $h: \nat^n \to \nat$ de la siguiente manera:
 }
 
 Puedo tomar $f_1, ..., f_n$ que tengan la forma $k$ o la forma $x_i + k$  y analizar qué pasa si las compongo (paso inductivo).
+
 \desarrollo{
-\begin{tabular}{l|l|c|l|c}
+\begin{tabular}{l|c|c|c|c}
 & \multicolumn{2}{c|}{$f_i(x_1, ..., x_n) = k$} & \multicolumn{2}{c}{$f_i(x_1, ..., x_n) = x_j + k$} \\ \cline{2-5}
 &&&&\\[-1em] 
 Composición & Forma &$k'$ & Forma & $k'$ \\ \hline
 &&&&\\[-1em]
-$n(f_i(x_1,...,f_n))$ & $f(x_1,...,x_n)=k$ & $0$ & $f(x_1,...,x_n)=k$ & $0$ \\
-$s(f_i(x_1,...,f_n))$ & $f(x_1,...,x_n)=k$ & $k+1$ & $f(x_1,...,x_n)=x_j+k$ & $k+1$ \\
-$u^n_i(f_1(...),...,f_i(...),...,f_n(...))$ & $f(x_1,...,x_n)=k$ & $k$ & $f(x_1,...,x_n)=x_j+k$ & k \\
-$f_i(f_1(...),...,f_n(...))$ & $f(x_1,...,x_n)=k$ & $k$ & $f(x_1,...,x_n)=f_j(...)+k$ & $f_j(...)+k$
+$n(f_i(x_1,...,f_n))$ & $k$ & $0$ & $k$ & $0$ \\
+$s(f_i(x_1,...,f_n))$ & $k$ & $k+1$ & $x_j+k$ & $k+1$ \\
+$u^n_i(f_1(...),...,f_i(...),...,f_n(...))$ & $k$ & $k$ & $x_j+k$ & k \\
+$f_i(f_1(...),...,f_n(...))$ & $k$ & $k$ & $f_j(...)+k$ & $f_j(...)+k$
 \end{tabular}
 }
 
