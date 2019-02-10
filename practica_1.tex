@@ -1,0 +1,444 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathdots}
+\setlength\parindent{0pt}
+\setlength{\parskip}{3mm}
+
+\newcommand{\desarrollo}[2]{
+
+\hspace{2em}\parbox{\textwidth}{#1}
+
+}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\Ccur}{\mathcal{C}}
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Resueltos Lógica y Computabilidad}
+\author{Ignacio E. Losiggio}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+\section{Práctica 1 - Funciones primitivas recursivas y clases PRC}
+
+\subsection{Mostrar que, dado un $k$ fijo, la función constante $f(x)=k$ puede definirse usando las funciones iniciales y composición (sin usar recursión primitiva)}
+
+Podemos empezar bien qué funciones nos piden, si $k = 0$  entonces $f_0(x)=n(x)$ (con $n$ la función constante $0$, que es primitiva).
+Si $k = 1$ entonces $f_1 = s(f_0(x))$, que sabemos que es primitiva recursiva porque lo hicimos una composición válida.
+Podemos intentar plasmar entonces estas funciones que nos piden en búqueda de un patrón: \\
+
+\desarrollo{
+\begin{tabular}{lll}
+$k$     & $f_k(x)$                 & Expresión expandida \\ \hline
+$k = 0$ & $f_0(x) = n(x)$          & $n(x)$ \\
+$k = 1$ & $f_1(x) = s(f_0(x))$     & $s(n(x))$ \\
+$k = 2$ & $f_2(x) = s(f_1(x))$     & $s(s(n(x))$ \\
+$k = n$ & $f_n(x) = s(f_{n-1}(x))$ & $s(s(...s(n(x))))$ \\
+\end{tabular}
+}
+
+Cómo podemos ver, construir la función constantemente $k$ sólo requiere de aplicar $s(x)$ $k$veces sobre $n(x)$. $\square$
+
+\subsection{Probar que las siguientes funciones son primitivas recursivas, mostrando que pueden obtenerse a partir de las funciones iniciales usando composición t/o recursión primitiva:}
+
+\subsubsection{$f_1(x,y)=x+y$}
+
+Tomamos la estructura de la recursión primitiva:
+
+\desarrollo{$
+f(x_1,...,x_n,0)   = h(x_1,...,x_n) \\
+f(x_1,...,x_n,t+1) = g(f(x_1,...,x_n,t),x_1,...,x_n,t)
+$}
+
+Con esto tenemos que elegir una $h(x)$ y una $g(n,x,t)$ que nos construyan la suma y copypastear cómo corresponda:
+
+\desarrollo{$
+f_1(x,0)   = u^1_1(x) \\
+f_1(x,t+1) = g(f_1(x,t),x,t) \\
+g(n,x,t)   = s(u^3_1(n,x,t))
+$}
+
+¿No queda claro por qué funciona? Hagamos un par de reemplazos a ver que pasa.
+
+\desarrollo{$
+g(n,x,t)   = s(u^3_1(n,x,t)) = s(n) \\
+f_1(x,0)   = u^1_1(x) = x \\
+f_1(x,t+1) = g(f_1(x,t),x,t) = s(f_1(x,t))
+$}
+
+Ajá!
+
+\desarrollo{
+\begin{tabular}{m{5cm}|l}
+Nuestros reemplazos & Una forma de describir la suma \\ \hline \\[-7pt]
+$
+f_1(x,0)   = x \newline
+f_1(x,t+1) = s(f_1(x,t))
+$ & $
+f_1(x,y) = 
+\begin{cases}
+  x             & \text{si } y = 0 \\
+  1 + f_1(x, y-1) & \text{sino}
+\end{cases}
+$
+\end{tabular}
+}
+
+Bueno, con este truco vamos a meterle a todo el resto de los ejercicios de este punto!
+
+\subsubsection{$f_2(x,y)=x \cdot y$}
+
+Bien, pongamos de vuelta en práctica lo que acabamos de hacer. Si tu intuición te llama a que vamos a tener que usea $f_1(x,y)$ acá estás más que en lo cierto. Pero primero plantiemos una función partida común y corriente a ver cómo vamos desde ahí a nuestra recursión primitiva:
+
+\desarrollo{$
+f_2(x,y) = 
+\begin{cases}
+  0             & \text{si } y = 0 \\
+  x + f_2(x, y-1) & \text{sino}
+\end{cases}
+$}
+
+Y de ahí salimos a buscar nuestro $h(x)$ y nuestro $g(n,x,t)$:
+
+\desarrollo{$
+f_2(x,0)   = n(x) = 0 \\
+f_2(x,t+1) = g(f_2(x,t),x,t) \\
+g(n,x,t)   = f_1(u^3_2(n,x,t),u^3_1(n,x,t)) = x + n
+$}
+
+Y para estar del todo seguros hacemos todos los reemplazos cómo la otra vez:
+
+\desarrollo{$
+f_2(x,0)   = 0\\
+f_2(x,t+1) = x + f_2(x,t)
+$}
+
+Justo lo que buscábamos.
+
+\subsubsection{$f_3(x,y)=x^y$}
+
+Bueno, supongo que ya te diste cuenta de cuál es el patrón, te paso cuál es la $h(x)$ y la $g(n,x,t)$:
+
+\desarrollo{$
+h(x)     = s(n(x)) = 1 \\
+g(n,x,t) = f_2(u^3_2(n,x,t), u^3_1(n,x,t) = x \cdot n \\
+\\
+f_3(x,0)   = 1 \\
+f_3(x,t+1) = x \cdot f_3(x,t)
+$}
+
+\subsubsection{$f_4(x,y)=x^{x^{\cdot^{\cdot^{\cdot^{^{x}}}}}}$}
+
+Observación: se asume que $f_4(x,0)=1$
+
+\desarrollo{$
+h(x) = s(n(x)) = 1 \\
+g(n,x,t) = f_3(u^3_2(n,x,t),u^3_1(n,x,t)) = x^n \\
+\\
+f_4(x,0) = 1 \\
+f_4(x,t+1) = x^{f_4(x,t)}
+$}
+
+\subsubsection{$g_1(x)=\dot-1$}
+
+Cómo sólo estamos operando en los $\nat$ el predecesor de 0 es 0. Una cosa a notar es que (según la teórica, filmina 25, primera clase de computabilidad) ``En este contexto, una función 0-aria es una constante $k$. Si $f$ es 1-aria y $t=0$ entonces $h(t)=k=s^{(k)}(n(t))$.".
+
+\desarrollo{$
+g_1(0) = n(0)\\
+g_1(t+1) = u^1_1(t)
+$}
+
+\subsubsection{$g_2(x,y)=x\dot-y$}
+
+Observación:
+
+\desarrollo{$
+x\dot-y =
+\begin{cases}
+  x - y & \text{si } y \le x \\
+  0     & \text{si } y > x
+\end{cases}
+$}
+
+Bueno, entonces podemos empezar a intentar construir la resta.
+
+\desarrollo{$
+f(x) = u^1_1(x) = x \\
+g(n, x, t) = g_1(u^3_1(n,x,t)) = n \dot- 1
+$}
+
+¿Está bien esto? Probemos algunos números
+
+\desarrollo{$
+g_2(5, 3) = g(g_2(5, 2), 5, 3) = g_2(5, 2) - 1 \\
+g_2(5, 3) = g(g_2(5, 1), 5, 3) - 1 = g_2(5, 1) - 1 - 1 \\
+g_2(5, 3) = g(g_2(5, 0), 5, 3) - 1 - 1 = g_2(5, 0) - 1 - 1 - 1 \\
+g_2(5, 3) = 5 - 1 - 1 - 1 \\
+g_2(5, 3) = 2
+$}
+
+¡Bien!
+
+\subsubsection{$g_3(x,y)=max\{x,y\}$}
+
+Cómo operamos con los naturales sabemos que si $x < y$ entonces $x - y = 0$ podemos usar la recursión primitiva para construir una función de decisión.
+
+\desarrollo{$
+d(x, y, 0) = u^2_2(x, y) = y \\
+d(x, y, t+1) = u^4_2(d(x, y, t), x, y, t) = x
+$}
+
+Ahora, esto no es $g_3(x,y)$ pero está peligrosamente cerca, podemos usar la composición para finalmente contruirlo.
+
+\desarrollo{$
+g_3(x,y) = d(u^2_1(x, y), u^2_2(x, y), g_2(x,y)) = d(x, y, x \dot- y)
+$}
+
+\subsubsection{$g_4(x,y)=min\{x,y\}$}
+
+La idea es la misma que recién, pero construímos parametrizamos la decisión al revés:
+
+\desarrollo{$
+g_3(x,y) = d(u^2_2(x,y), u^2_1(x,y), g_2(x,y)) = d(y, x, x \dot- y)
+$}
+
+\subsection{Sea $\Ccur_i$ la clase de funciones iniciales y $\Ccur_c$ la (mínima) clase que extiende a $\Ccur_i$ y se encuentra cerrada por composición:}
+
+Es decir, $\Ccur_i$ aquella que contiene a:
+
+\begin{tabular}{lcr}
+$n(x)=0$, &
+$s(x)=x+1$, &
+$u^n_i(x_1,...x_n)=x_i$ para cada $n \in \nat$ e $i \in \{1, ..., n\}$
+\end{tabular}
+
+Y $\Ccur_c$ aquella que si $f, g_1, ..., g_m$ están en $\Ccur_c$, entonces $h(x_1, ..., x_n) = f(g_1(x_1, ..., x_n), ..., g_m(x_1, ..., x_n))$ también lo está.
+
+\subsubsection{Demostrar que para toda $f: \nat^n \to \nat$, $f$, está en $\Ccur_c$ sii existe $k \geq 0$ tal que, o bien sucede $f(x_1, ..., x_n) = k$, o bien para algún $i$ fijo, se tiene $f(x_1, ..., x_n) = x_i + k$.}
+
+El enunciado nos propone demostrar que $\Ccur_c$ sólo tiene funciones que devuelven constantes y funciones que suman constantes a \emph{uno} de sus parámetros (y siempre el mismo).
+
+Demostrar la vuelta es particularmente fácil, primero construyo la función 1-aria que suma $k$ con el método del primer ejercicio (teniendo $u^1_1(x)$ cómo caso base en lugar de $n(x)$ y la llamo $k(x)$. También construyo una función constantemente 0 que tome $n$ argumentos.
+
+\desarrollo{$
+k(x) = s(...s(u^1_1(x))) \text{\hspace{7em} Nota: si $k=0$ entonces } k(x)=u^1_1(x) \\
+z(x_1, ...., x_n) = n(u^n_1(x_1, ..., x_n))
+$}
+
+Ahora sólo tengo que cubrir cada caso:
+\begin{itemize}
+\item Si tengo una $f: \nat^n \to \nat$ que es constantemente $k$.
+\desarrollo{$ f(x_1, ..., x_n) = k(z(x_1, ..., x_n)) $}
+
+\item Si tengo una $f: \nat^n \to \nat$ que es constantemente $x_i + k$.
+\desarrollo{$ f(x_1, ..., x_n) = k(u^n_i(x_1,...,x_n)) $}
+
+\end{itemize}
+
+Cómo sólo hice composiciones para construir la $f$ entonces esto debería bastar para demostrar que las funciones constantes y las que suman constantes pertenecen todas a $\Ccur_c$.
+
+Para demostrar la ida necesito asegurarme que las funciones en $\Ccur_c$ sólo pueden ser constantes (o sumar constantes). Si empezamos examinando los casos base...
+
+\desarrollo{
+\begin{tabular}{lll}
+Primitiva                  & Forma                        & $k$ \\ \hline \\[-1em]
+$n(x)=0$                   & $f(x) = k$                   & $0$ \\
+$s(x)=x+1$                 & $f(x) = x + k = x + 1$       & $1$ \\
+$u^n_i(x_1, ..., x_n)=x_i$ & $f(x_1, ..., x_n) = x_i + k$ & $0$
+\end{tabular}
+}
+
+...tenemos que todos ellos tienen o la forma $k$ o la de $x_i + k$. Ahora examinemos nuestra regla de composición:
+
+\desarrollo{
+Sea:
+\desarrollo{$
+f: \nat^m \to \nat \\
+g_1, ..., g_m: \nat^n \to \nat
+$\\}
+
+Podemos construir $h: \nat^n \to \nat$ de la siguiente manera:
+\desarrollo{$h(x_1, ..., x_n) = f(g_1(x_1, ..., x_n), ..., g_m(x_1, ..., g_n))$}
+}
+
+Puedo tomar $f_1, ..., f_n$ que tengan la forma $k$ o la forma $x_i + k$  y analizar qué pasa si las compongo (paso inductivo).
+
+\desarrollo{
+\begin{tabular}{l|l|c|l|c}
+& \multicolumn{2}{c|}{$f_i(x_1, ..., x_n) = k$} & \multicolumn{2}{c}{$f_i(x_1, ..., x_n) = x_j + k$} \\ \cline{2-5}
+&&&&\\[-1em] 
+Composición & Forma &$k'$ & Forma & $k'$ \\ \hline
+&&&&\\[-1em]
+$n(f_i(x_1,...,f_n))$ & $f(x_1,...,x_n)=k$ & $0$ & $f(x_1,...,x_n)=k$ & $0$ \\
+$s(f_i(x_1,...,f_n))$ & $f(x_1,...,x_n)=k$ & $k+1$ & $f(x_1,...,x_n)=x_j+k$ & $k+1$ \\
+$u^n_i(f_1(...),...,f_i(...),...,f_n(...))$ & $f(x_1,...,x_n)=k$ & $k$ & $f(x_1,...,x_n)=x_j+k$ & k \\
+$f_i(f_1(...),...,f_n(...))$ & $f(x_1,...,x_n)=k$ & $k$ & $f(x_1,...,x_n)=f_j(...)+k$ & $f_j(...)+k$
+\end{tabular}
+}
+
+Si bien el último caso puede parecer molesto, por la hipótesis inductiva sabemos que $f_k$ tiene o bien forma $k$ o bien forma $x_i+k$, entonces $k'=k_{f_j}+k_{f_i}$ y la forma se mantiene.
+
+Entonces, si parto de funciones en $\Ccur_c$ y las compongo siempre voy a llegar a una función de la forma $k$ o $x_i+k$. Y dado que las funciones iniciales tienen también esa forma entonces todo $\Ccur_c$ la tiene también.
+
+\subsubsection{Mostrar que existe una función primitiva recursiva que no está en $\Ccur_c$}
+
+$f_1(x,y)$ del ejercicio 2. Es primitiva recursiva porque está construida en base a la recursión primitiva y a la composición de funciones. Pero depende de ambos parámetros para emitir su resultado (a diferencia de todas las de $\Ccur_c$).
+
+\subsection{Mostrar que los predicados $\leq$, $\geq$, $=$, $\neq$, $<$ t $>$ $: \nat^2\to\{0,1\}$ están en cualquier clase \emph{PRC}}
+
+Llamamos \emph{predicado} a cualquier función $p: \nat^n\to\{0,1\}$, escribimos $p(a_1,...,a_n)$ en lugar de $p(a_1,...,a_n)=1$ y decimos, informalmente, en este caso, que ``$p(a_1,...,a_n)$ es verdadero".
+
+Vamos a empezar poniéndoles nombres a las funciones que queremos construir y vamos a tener en cuenta las funciones que construímos en el ejercicio 2 para facilitarnos la vida:
+
+\begin{tabular}{lcr}
+$f_1(x,y)=
+  \begin{cases}
+  1 & \text{ si } x\leq y \\
+  0 & sino
+  \end{cases}$ &
+$f_2(x,y)=
+  \begin{cases}
+  1 & \text{ si } x\geq y \\
+  0 & sino
+  \end{cases}$ &
+$f_3(x,y)=
+  \begin{cases}
+  1 & \text{ si } x=y \\
+  0 & sino
+  \end{cases}$ \\ \\
+$f_4(x,y)=
+  \begin{cases}
+  1 & \text{ si } x\neq y \\
+  0 & sino
+  \end{cases}$ &
+$f_5(x,y)=
+  \begin{cases}
+  1 & \text{ si } x<y \\
+  0 & sino
+  \end{cases}$ &
+$f_6(x,y)=
+  \begin{cases}
+  1 & \text{ si } x>y \\
+  0 & sino
+  \end{cases}$ \\
+\end{tabular}
+
+Y para hacernos la vida más fácil vamos a construir $\alpha(x)$ que es la negación lógica en nuestro modelo.
+
+\desarrollo{$
+\alpha(0) = n(0) \\
+\alpha(t+1) = s(n(t))
+$}
+
+¡Y ahora sí!
+
+\desarrollo{$
+f_1(x,y)=\alpha(x\dot-y) \\
+f_2(x,y)=\alpha(y\dot-x) \\
+f_3(x,y)=(x \leq y) \cdot (y \leq x) \\
+f_4(x,y)=\alpha(x = y) \\
+f_5(x,y)=\alpha(x \geq y)) \\
+f_6(x,y)=\alpha(x \leq y))
+$}
+
+\emph{Nota:} $f_3$ puede parecer raro al no parecer una composición tan simple, plantearlo prolijamente requiere una funcion auxiliar que cambia el orden de los parámetros.
+
+\subsection{Sean $\Ccur$ una clase \emph{PRC}, $f_1,...,f_k,g:\nat^n\to\nat$ funciones en $\Ccur$ y $p_1,...,p_k:\nat^n\to\nat$ predicados disjuntos en $\Ccur$. Mostrar que la siguiente función también está en $\Ccur$:}
+
+\desarrollo{$
+h(x_1,...,x_n) =
+\begin{cases}
+  f_1(x_1,...,x_n) & \text{ si } p_1(x_1,...,x_n) \\
+  \hspace{3em}\vdots \\
+  f_k(x_1,...,x_n) & \text{ si } p_k(x_1,...,x_n) \\
+  g(x_1,...,x_n) & \text{ sino} \\
+\end{cases}
+$}
+
+Observar que $h$ queda completamente determinada por este esquema.
+
+\emph{Nota:} Al ser $p_1,...,p_k$ disjuntos no sucede $p_i(a_1,...,a_n) = p_j(a_1,...,a_n) = 1$ con $i \neq j$ para ningún $(a_1,...,a_n) \in \nat^n$.
+
+Si podemos resolverlo para el caso de $k=1$ entonces podremos resolverlo para cualquier $k$ arbitrario. Podemos construir $h(x_1,...,x_n)$ de la siguiente forma:
+
+\desarrollo{$
+h(x_1,...,x_n) = h_1(x_1,...,x_n) \\
+h_i(x_1,...,x_n) =
+\begin{cases}
+  f_i(x_1,...,x_n) & \text{ si } p_i(x_1,...,x_n) \\
+  h_{i+1}(x_1,...,x_n) & \text{ sino}
+\end{cases}
+\hspace{1em} \forall i \neq k+1 \\
+h_{k+1}(x_1,...,x_n) = g(x_1,...,x_n)
+$}
+
+Ahora sólo queda resolverlo para el caso de 2. ¡Cosa que ya hicimos en el ejercicio 2 con $max\{x,y\}$ y $min\{x,y\}$! Repasemos esa solución: construimos una función de decisión $d_i$ y la encapsulamos para construir el $h_i$.
+
+\desarrollo{$
+d_i(x_1,...,x_n,0) = f_i(x_1,...,x_n) \\
+d_i(x_1,...,x_n,t+1) = h_{i+1}(x_1,...,x_n) \\ \\
+h_i(x_1,...,x_n) = d_i(x_1,...,x_n,p(x_1,...,x_n)) \hspace{1em} \forall i \neq k+1 \\
+h_{k+1}(x_1,...,x_n) = g(x_1,...,x_n)
+$}
+
+Ahora tenemos todo listo, sólo queda enunciar a nuestro $h$:
+
+\desarrollo{$h(x_1,...,x_n) = h_1(x_1,...,x_n)$}
+
+\end{document}
