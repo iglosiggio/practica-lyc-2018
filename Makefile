@@ -2,8 +2,9 @@
 	pdflatex $< -o $@
 
 TMPFILES=*.log *.aux
+RESUELTOS=resuelto1.pdf resuelto3.pdf
 
-all: practica_1.pdf
+all: $(RESUELTOS)
 
 clean:
 	rm -f *.pdf $(TMPFILES)
