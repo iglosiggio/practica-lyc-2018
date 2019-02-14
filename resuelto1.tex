@@ -469,7 +469,7 @@ plantearlo prolijamente requiere una funcion auxiliar que cambia el orden de
 los parámetros.
 
 \subsection{Sean $\Ccur$ una clase \emph{PRC}, $f_1, \dots, f_k,
-g:\nat^n\to\nat$ funciones en $\Ccur$ y $p_1, \dots, p_k:\nat^n\to\nat$
+g:\nat^n\to\nat$ funciones en $\Ccur$ y $p_1, \dots, p_k: \nat^n \to \{0, 1\}$
 predicados disjuntos en $\Ccur$. Mostrar que la siguiente función también está
 en $\Ccur$:}
 
@@ -534,5 +534,78 @@ construir \\ $h(x_1, \dots, x_n)$ de la siguiente manera:
 	+&& g(x_1, \dots, x_n)
 	&\cdot \alpha(p_1(x_1, \dots, x_n) + \cdots + p_k(x_1, \dots, x_n))
 \end{alignat*}
+
+\subsection{Demostrar las siguientes afirmaciones}
+
+\subsubsection{El predicado $par (x) =
+\protect\begin{cases}
+	1 & \text{si $x$ es par} \\
+	0 & \text{sino}
+\protect\end{cases}$ está en toda clase $PRC$}
+
+La menor clase $PRC$ es la que contiene a las primitivas recursivas, si podemos
+demostrar $par(x)$ cómo primitiva recursiva tenemos el ejercicio hecho.
+
+Intentemos definir $par(x)$ con una recursión primitiva:
+\begin{align*}
+	par(0)     &= 1 \\
+	par(t + 1) &= \alpha(par(t))
+\end{align*}
+
+Podemos ver que si el número es par nos va a quedar una cantidad par de
+$\alpha$ por lo que se cancelan y queda $1$ de respuesta, y en el caso
+contrario un $0$ cómo era esperado.
+
+Cómo $\alpha$ es primitiva recursiva y la clase de las primitivas recursivas
+está cerrada por composición y recursión primitiva entonces $par(x)$ pertenece
+a esa clase. Cómo esa clase es la menor clase $PRC$ entonces $par(x)$ pertenece
+a \emph{toda} clase $PRC$.
+
+\subsubsection{Demostrar que la función $f(x) = \lfloor x / 2 \rfloor$ está en
+toda clase $PRC$}
+
+Podemos intentar lo mismo que en el punto anterior:
+\begin{align*}
+	f(0)     &= 0 \\
+	f(t + 1) &= par(t) + f(t)
+\end{align*}
+
+\subsubsection{Sea $\Ccur$ una clase $PRC$, y sean $f: \nat^n \to \nat$ y
+$g_1$, $g_2$ $: \nat^{n+2} \to \nat$ funciones en $\Ccur$. Mostrar que también
+está en $\Ccur$ cualquier $h$ que cumpla:}
+
+\[
+	h(x_1, \dots, x_n, t) =
+	\begin{cases}
+		f(x_1, \dots, x_n)
+			& \text{si } t = 0 \\
+		g_1(x_1, \dots, x_n, k, h(x_1, \dots, x_n, t - 1))
+			& \text{si } t = 2 \cdot k + 1 \\
+		g_2(x_1, \dots, x_n, k, h(x_1, \dots, x_n, t - 1))
+			& \text{si } t = 2 \cdot k + 2 \\
+	\end{cases}
+\]
+
+Observar que $h$ queda completamente determinada por este esquema.
+
+Podemos usar una recursión primitiva no tan trivial:
+\begin{align*}
+	h(x_1, \dots, x_n, 0)
+		=&\ f(x_1, \dots, x_n) \\
+	h(x_1, \dots, x_n, t + 1)
+		=&\ g_1(x_1, \dots, x_n, \lfloor x / 2 \rfloor,
+		    h(x_1, \dots, x_n, t)) \cdot par(t) \\
+		+&\ g_2(x_1, \dots, x_n, \lfloor x / 2 \rfloor,
+		    h(x_1, \dots, x_n, t)) \cdot \alpha(par(t))
+\end{align*}
+
+Si bien el término para $t + 1$ es complejo podemos ver que usamos funciones de
+$\Ccur$ ($f$, $g_1$, $g_2$), que llamamos a $h$ con el valor anterior de $t$ y
+que usamos funciones que ya demostramos como primitivas recursivas (y por ende
+pertenecen a $\Ccur$) siendo estas $par$, $\alpha$, la suma, la multiplicación
+y la división truncada.
+
+El reordenamiento de los parámetros también es primitivo recursivo, dado que
+nos lo regalan los proyectores ($u^n_i$).
 
 \end{document}
