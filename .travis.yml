@@ -1,10 +1,7 @@
 # From https://github.com/harshjv/travis-ci-latex-pdf/
-sudo: required
 language: generic
 before_install:
-  - sudo apt update && sudo apt install -y --no-install-recommends
-    texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng
-    texlive-latex-recommended
+  - sudo apt update && sudo apt install -y --no-install-recommends texlive-full
 script:
   - make all
 
