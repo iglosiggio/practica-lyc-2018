@@ -3,7 +3,7 @@ language: generic
 before_install:
   - sudo apt update && sudo apt install -y --no-install-recommends
     texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng
-    texlive-latex-recommended texlive-plain-generic lmodern
+    texlive-latex-recommended texlive-generic-extra lmodern
 env:
   - LATEXFLAGS="-interaction=nonstopmode -halt-on-error"
 script:
