@@ -1,7 +1,9 @@
 # From https://github.com/harshjv/travis-ci-latex-pdf/
 language: generic
 before_install:
-  - sudo apt update && sudo apt install -y --no-install-recommends texlive-full
+  - sudo apt update && sudo apt install -y --no-install-recommends
+    texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng
+    texlive-latex-recommended lmodern
 env:
   - LATEXFLAGS="-interaction=nonstopmode -halt-on-error"
 script:
