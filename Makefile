@@ -1,5 +1,5 @@
 %.pdf: %.tex
-	pdflatex $< -o $@
+	pdflatex $(LATEXFLAGS) $< -o $@
 
 TMPFILES=*.log *.aux
 RESUELTOS=resuelto1.pdf resuelto3.pdf
