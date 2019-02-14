@@ -1,0 +1,22 @@
+# From https://github.com/harshjv/travis-ci-latex-pdf/
+language: generic
+before_install:
+  - sudo apt update && sudo apt install -y --no-install-recommends
+    texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng
+    texlive-latex-recommended texlive-generic-extra lmodern
+env:
+  - LATEXFLAGS="-interaction=nonstopmode -halt-on-error"
+script:
+  - make all
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  # Set in the settings page of your repository, as a secure variable
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  file:
+    - resueltos1.pdf
+    - resueltos3.pdf
+  on:
+    branch: master
