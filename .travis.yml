@@ -9,7 +9,7 @@ env:
 script:
   - mkdir build
   - make all
-  - mv *.pdf build
+  - mv *.pdf index.html build
 
 deploy:
   provider: pages
