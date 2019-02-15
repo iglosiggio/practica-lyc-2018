@@ -474,4 +474,25 @@ $\Scur$-computable (total), entonces es $\Scur$-parcial computable:}
 	\end{cases}
 \]
 
+La forma más simple de demostrarlo es dar un programa:
+\begin{align*}
+	     &Y \into y \\
+	[A]\ &\IF\ p(x_1, \dots, x_n, t) \neq 0\ \GOTO\ E \\
+	     &Y \into Y + 1 \\
+	     &\GOTO\ A
+\end{align*}
+
+\subsubsection{Mostrar, usando el resultado anterior, que si
+$f : \nat \to \nat$ es biyectiva y $\Scur$-computable (total) entonces también
+lo es su inversa $f^{-1}$.}
+
+Partiendo del ejercicio anterior y con unos reemplazos simples obtenemos algo
+similar a esto:
+\begin{gather*}
+	p(x, y) = (f(x) = y) \\
+	f^{-1}(x) = \text{mínimoNA}_p(x, 0)
+\end{gather*}
+Cómo sabemos que $f$ es total entonces siempre existe ese $t$ y $f^{-1}$
+resulta también total.
+
 \end{document}
