@@ -75,8 +75,13 @@
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\Ccur}{\mathcal{C}}
 \newcommand{\Scur}{\mathcal{S}}
-\newcommand{\indef}{\downarrow}
+\newcommand{\indef}{\uparrow}
 \newcommand{\into}{\leftarrow}
+\newcommand{\IF}{\text{IF}}
+\newcommand{\GOTO}{\text{GOTO}}
+\newcommand{\WHILE}{\text{WHILE}}
+\newcommand{\THEN}{\text{THEN}}
+\newcommand{\ELSE}{\text{ELSE}}
 
 \overfullrule=2em
 
@@ -94,7 +99,7 @@
 \maketitle
 \section{Práctica 2 --- Funciones $\Scur$--computables}
 
-\subsection{Ejercicio 1}
+\subsection{}
 
 \subsubsection{Definir \emph{macros} para las siguientes pseudo-instrucciones
 (con su interpretación natural) e indicar en cada caso qué etiquetas se asumen
@@ -104,7 +109,7 @@
 	\item $V_i \into k$
 		\begin{align*}
 			[R]\ & V_i \into V_i - 1 \\
-			     & IF\ V_i \neq 0\ GOTO\ R \\
+			     & \IF\ V_i \neq 0\ \GOTO\ R \\
 			     & V_i \into V_i + 1 \\
 			     & \hspace{1.5em} \vdots
 			       \hspace{2em}k\ \text{veces} \\
@@ -115,30 +120,30 @@
 		\begin{align*}
 			     & V_i \into k \\
 			     & Z_a \into Z_a + 1 \\
-			     & IF\ Z_a \neq 0\ GOTO\ C \\
+			     & \IF\ Z_a \neq 0\ \GOTO\ C \\
 			[S]\ & V_j \into V_j - 1 \\
 			     & V_i \into V_i + 1 \\
 			     & Z_a \into Z_a + 1 \\
-			[C]\ & IF\ V_j \neq 0\ GOTO\ S \\
-			     & IF\ Z_a \neq 0\ GOTO\ F \\
+			[C]\ & \IF\ V_j \neq 0\ \GOTO\ S \\
+			     & \IF\ Z_a \neq 0\ \GOTO\ F \\
 			[L]\ & V_j \into V_j + 1 \\
 			[F]\ & Z_a \into Z_a - 1 \\
-			     & IF\ Z_a \neq 0\ GOTO\ L
+			     & \IF\ Z_a \neq 0\ \GOTO\ L
 		\end{align*}
 		Se toman las etiquetas $S$, $C$, $L$, $F$ y la variable
 		$Z_a$ cómo frescas.
-	\item $IF\ V_i = 0\ GOTO\ L$
+	\item $\IF\ V_i = 0\ \GOTO\ L$
 		\begin{align*}
-			     &IF\ V_i \neq 0\ GOTO\ C \\
+			     &\IF\ V_i \neq 0\ \GOTO\ C \\
 			     &Z_a \into Z_a + 1 \\
-			     &IF\ Z_a \neq 0\ GOTO\ L \\
+			     &\IF\ Z_a \neq 0\ \GOTO\ L \\
 			[C]\ &Z_a \into Z_a + 1 \\
 		\end{align*}
 		Se toman la etiqueta $C$ y la variable $Z_a$ cómo frescas.
-	\item $GOTO\ L$
+	\item $\GOTO\ L$
 		\begin{align*}
 			     &Z_a \into Z_a + 1 \\
-			     &IF\ Z_a \neq 0\ GOTO\ L \\
+			     &\IF\ Z_a \neq 0\ \GOTO\ L \\
 		\end{align*}
 		Se toma sólo la variable $Z_a$ cómo fresca.
 \end{itemize}
@@ -152,43 +157,43 @@ etiquetas frescas.}
 \begin{align*}
 	\begin{aligned}
 		     &Y   \into X_1 + 0 \\
-		     &GOTO\ B \\
+		     &\GOTO\ B \\
 		[A]\ &Y   \into Y   + 1 \\
 		     &X_2 \into X_2 - 1 \\
-		[B]\ &IF\ X_2 \neq 0\ GOTO\ A
+		[B]\ &\IF\ X_2 \neq 0\ \GOTO\ A
 	\end{aligned}
 	&&
 	\begin{aligned}\
-		[A]\ &IF\ X_1 = 0\ GOTO\ B \\
+		[A]\ &\IF\ X_1 = 0\ \GOTO\ B \\
 		     &Y   \into Y   + 1 \\
 		     &X_1 \into X_1 - 1 \\
-		     &GOTO\ A \\
-		[B]\ &IF\ X_2 = 0\ GOTO\ E \\
+		     &\GOTO\ A \\
+		[B]\ &\IF\ X_2 = 0\ \GOTO\ E \\
 		     &Y   \into Y   + 1 \\
 		     &X_2 \into X_2 - 1 \\
-		     &GOTO\ B
+		     &\GOTO\ B
 	\end{aligned}
 \end{align*}
 
 Vamos a expandir la segunda de las formulaciones (por ser la que tiene macros
 más simples).
 \begin{align*}
-	[A]\ &IF\ X_1 \neq 0\ GOTO\ Y \\
+	[A]\ &\IF\ X_1 \neq 0\ \GOTO\ Y \\
 	     &Z_1 \into Z_1 + 1 \\
-	     &IF\ Z_1 \neq 0\ GOTO\ B \\
+	     &\IF\ Z_1 \neq 0\ \GOTO\ B \\
 	[Y]\ &Z_1 \into Z_1 + 1 \\
 	     &Y   \into Y   + 1 \\
 	     &X_1 \into X_1 - 1 \\
 	     &Z_2 \into Z_2 + 1 \\
-	     &IF\ Z_2 \neq 0\ GOTO\ A \\
-	[B]\ &IF\ X_2 \neq 0\ GOTO\ Z \\
+	     &\IF\ Z_2 \neq 0\ \GOTO\ A \\
+	[B]\ &\IF\ X_2 \neq 0\ \GOTO\ Z \\
 	     &Z_3 \into Z_3 + 1 \\
-	     &IF\ Z_3 \neq 0\ GOTO\ E \\
+	     &\IF\ Z_3 \neq 0\ \GOTO\ E \\
 	[Z]\ &Z_3 \into Z_3 + 1 \\
 	     &Y   \into Y   + 1 \\
 	     &X_2 \into X_2 - 1 \\
 	     &Z_4 \into Z_4 + 1 \\
-	     &IF\ Z_4 \neq 0\ GOTO\ B \\
+	     &\IF\ Z_4 \neq 0\ \GOTO\ B \\
 \end{align*}
 
 \subsubsection{Sea $P$ el programa en $\Scur$ que resulta de expandir todas las
@@ -211,7 +216,7 @@ función computada en cada caso:}
 		ambas formulaciones del programa.
 \end{itemize}
 
-\subsection{Ejercicio 2}
+\subsection{}
 
 \subsubsection{Sea $\Ccur_\Scur = \{\Psi^{(n)}_P\ |\ P \text{\ es un programa
 en } S, n \geq 1\} $ la clase de funciones $\Scur$-parciales computables.
@@ -231,10 +236,11 @@ Vamos primero por las iniciales:
 Y ahora veamos cómo resolver la composición, tomo $h : \nat^k \to \nat$ y
 $g_1, \dots, g_k : \nat^n \to \nat$ que pertenezcan a $\Ccur_\Scur$ (y por lo
 tanto tengan programas que podamos usar cómo macros):
-\begin{gather*}
+\[
 	f(x_1, \dots, x_n) = h(g_1(x_1, \dots, x_n), \dots,
-	                       g_k(x_1, \dots, x_n)) \\
-	\\
+	                       g_k(x_1, \dots, x_n))
+\]
+\begin{gather*}
 	Z_1 \into g_1(X_1, \dots, X_n) \\
 	\hspace{1.8em} \vdots \\
 	Z_k \into g_k(X_1, \dots, X_n) \\
@@ -253,21 +259,119 @@ cumplir con su tarea.
 Dicho todo esto, vamos por la recursión primitiva, la cuál es más simple de lo
 que parece, tomo $h : \nat^n \to \nat$ y $g : \nat^{n + 2} \to \nat$ que
 pertenezcan a $\Ccur_\Scur$ (¡Osea que tenemos programas!):
-\begin{gather*}
-	\begin{aligned}
-		f(x_1, \dots, x_n, 0)     &= h(x_1, \dots, x_n) \\
-		f(x_1, \dots, x_n, t + 1) &= g(f(x_1, \dots, x_n, t),
-					       x_1, \dots, x_n, t)
-	\end{aligned} \\
-	\\
-	\begin{aligned}
-		     &Y \into h(X_1, \dots, X_n) \\
-		[L]\ &IF\ X_{n+1}\ = 0\ GOTO\ E \\
-		     &Z_1 \into Z_1 + 1 \\
-		     &X_{n+1} \into X_{n+1} - 1 \\
-		     &Y \into g(Y, X_1, \dots, X_n, Z_1) \\
-		     &GOTO\ L
-	\end{aligned}
-\end{gather*}
+\begin{align*}
+	f(x_1, \dots, x_n, 0)     &= h(x_1, \dots, x_n) \\
+	f(x_1, \dots, x_n, t + 1) &= g(f(x_1, \dots, x_n, t),
+				       x_1, \dots, x_n, t)
+\end{align*}
+\begin{align*}
+	     &Y \into h(X_1, \dots, X_n) \\
+	[L]\ &\IF\ X_{n+1}\ = 0\ \GOTO\ E \\
+	     &Z_1 \into Z_1 + 1 \\
+	     &X_{n+1} \into X_{n+1} - 1 \\
+	     &Y \into g(Y, X_1, \dots, X_n, Z_1) \\
+	     &\GOTO\ L
+\end{align*}
+
+\subsubsection{Demostrar (sin definir un programa en $\Scur$) que la función
+$* : \nat^2 \to \nat$ definida por $*(x, y) = x \cdot y$ es
+$\Scur$-computable.}
+
+En la práctica anterior la demostramos primitiva recursiva y sabemos que
+$pr \subseteq PRC$ para cualquier conjunto $PRC$. En el punto anterior
+demostramos que $\Ccur_\Scur$ era $PRC$, por lo que todas las primitivas
+recursivas están allí, entre ellas $*$.
+
+\subsubsection{Si $f : \nat^n \to \nat$ es una función primitiva recursiva ¿Qué
+podemos decir acerca de la existencia de un programa en el lenguaje $\Scur$ que
+la compute?}
+
+Que existe (por las mismas razones del punto anterior).
+
+\subsection{Decimos que un programa $P$ es \emph{autocontenido} si en cada
+instrucción $\IF\ V \neq 0\ \GOTO\ L$ que ocurre en $P$, $L$ es una etiqueta
+definida en $P$.}
+
+\subsubsection{Demostrar que todo programa $P$ tiene un programa autocontenido
+$P'$ equivalente ($P$ y $P'$ son programs equivalentes si
+$\Psi^{(n)}_P = \Psi^{(n)}_{P'} \forall n \geq 1$).}
+
+Supongamos $P$ un programa no autocontenido con una cantidad $k$ de etiquetas
+``libres'' $L_1, \dots, L_k$ (etiquetas en uso pero sin lugar hacia dónde
+saltar). Cómo el programa $P$ es finito usa una cantida finita de variables
+temporales $Z_1, \dots, Z_n$ y tiene una cantidad finita de instrucciones
+podemos construir $P'$ agregándole las siguientes instrucciones al final de
+$P$:
+\begin{align*}
+	[L_1]\ &Z_{n+1} \into Z_{n+1} + 1 \\
+	       & \hspace{2.7em} \vdots \\
+	[L_k]\ &Z_{n+1} \into Z_{n+1} + 1
+\end{align*}
+Necesitamos sólo una variable ``fresca'' y cómo nunca modificamos a $Y$ el
+resultado del programa $P$ no se modifica.
+
+\subsubsection{Sean $P$ y $Q$ dos programas autocontenidos con etiquetas
+disjuntas y sea $r : \nat^n \to \{0, 1\}$ un predicado primitivo recursivo.
+Definir macros para las siguientes pseudo-instrucciones (con su interpretación
+natural)}
+
+\begin{itemize}
+	\item $\IF\ r(V_1, \dots, V_n)\ \GOTO\ L$
+		\begin{gather*}
+			Z_a \into r(V_1, \dots, V_n) \\
+			\IF\ Z_a \neq 0\ \GOTO\ L
+		\end{gather*}
+	\item $\IF\ r(V_1, \dots, V_n)\ \THEN\ P\ \ELSE\ Q$
+		\begin{align*}
+			     &\IF\ r(V_1, \dots, V_n)\ \GOTO\ P \\
+			     &\text{; Acá van los contenidos de }Q \\
+			     &\GOTO\ E \\
+			[P]\ &\text{; Acá van los contenidos de }P
+		\end{align*}
+	\item $\WHILE\ r(V_1, \dots, V_n)\ P$
+		\begin{align*}
+			[L]\ &\IF\ \alpha(r(V_1, \dots, V_n))\ \GOTO\ E \\
+			     &\text{; Acá van los contenidos de }P \\
+			     &\GOTO\ L
+		\end{align*}
+\end{itemize}
+
+\subsubsection{Dadas las funciones $f, g : \nat \to \nat$ definidas por:}
+
+\begin{align*}
+	f(x) =
+	\begin{cases}
+		1      & \text{si } x = 3 \\
+		\indef & \text{en otro caso}
+	\end{cases}  && g(x) = 2x
+\end{align*}
+
+Demostrar que es $\Scur$-parcial computable la función
+\[
+	h(x) = 
+	\begin{cases}
+		f(x) & \text{si } x \geq 5 \lor x = 3 \\
+		g(x) & \text{en otro caso}
+	\end{cases}
+\]
+
+Tengo que las operaciones $a = b$, $a \geq b$, $a \lor b$ y $a \cdot b$ son
+p.r., por lo que sé que existen programas en $\Scur$ que las computan. También
+tengo que la división por casos en una clase $PRC$ genera una función dentro de
+la misma clase. Dado todo esto ya puedo asegurar que $g(x)$ es $\Scur$-parcial
+computable y que si $f(x)$ lo fuera entonces $h(x)$ también.
+
+Me queda demostrar que en $\Scur$ los programas (a veces) se cuelgan. Defino
+$j(x) = \indef \forall x$ y reescribo $f(x)$ cómo una composición con $j(x)$.
+\[
+	f(x) =
+	\begin{cases}
+		1    & \text{si } x = 3 \\
+		j(x) & \text{en otro caso}
+	\end{cases}
+\]
+
+Y sólo me queda ofrecer el código de $j(x)$:
+\[[A]\ \GOTO\ A\]
 
 \end{document}
