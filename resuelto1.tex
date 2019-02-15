@@ -180,10 +180,10 @@ cómo vamos desde ahí a nuestra recursión primitiva:
 Y de ahí salimos a buscar nuestro $h(x)$ y nuestro $g(n, x, t)$:
 \begin{align*}
 	f_2(x, 0)     &= n(x) \\
-	&= 0 \\
+	              &= 0 \\
 	f_2(x, t + 1) &= g(f_2(x, t), x, t) \\
-	g(n, x, t)     &= f_1(u^3_2(n, x, t), u^3_1(n, x, t)) \\
-	&= x + n
+	g(n, x, t)    &= f_1(u^3_2(n, x, t), u^3_1(n, x, t)) \\
+	              &= x + n
 \end{align*}
 
 Y para estar del todo seguros hacemos todos los reemplazos cómo la otra vez:
@@ -227,9 +227,12 @@ Cómo sólo estamos operando en los $\nat$ el predecesor de 0 es 0. Una cosa a
 notar es que (según la teórica, filmina 25, primera clase de computabilidad)
 ``En este contexto, una función 0-aria es una constante $k$. Si $f$ es 1-aria y
 $t = 0$ entonces $h(t) = k = s^{(k)}(n(t))$.''.
+
 \begin{align*}
 	g_1(0)     &= n(0)\\
-	g_1(t + 1) &= u^1_1(t)
+	           &= 0 \\
+	g_1(t + 1) &= u^2_2(g_1(t), t) \\
+	           &= t
 \end{align*}
 
 \subsubsection{$g_2(x, y) = x \dot- y$}
@@ -450,8 +453,8 @@ facilitarnos la vida:
 Y para hacernos la vida más fácil vamos a construir $\alpha(x)$ que es la
 negación lógica en nuestro modelo.
 \begin{align*}
-	\alpha(0)     &= n(0) \\
-	\alpha(t + 1) &= s(n(t))
+	\alpha(0)     &= s(n(0)) \\
+	\alpha(t + 1) &= n(t)
 \end{align*}
 
 ¡Y ahora sí!
