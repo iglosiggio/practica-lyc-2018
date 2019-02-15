@@ -77,11 +77,16 @@
 \newcommand{\Scur}{\mathcal{S}}
 \newcommand{\indef}{\uparrow}
 \newcommand{\into}{\leftarrow}
-\newcommand{\IF}{\text{IF}}
-\newcommand{\GOTO}{\text{GOTO}}
-\newcommand{\WHILE}{\text{WHILE}}
-\newcommand{\THEN}{\text{THEN}}
-\newcommand{\ELSE}{\text{ELSE}}
+\newcommand{\textcommand}[2]{\newcommand{#1}{\text{#2}}}
+\textcommand{\IF}{IF}
+\textcommand{\GOTO}{GOTO}
+\textcommand{\WHILE}{WHILE}
+\textcommand{\THEN}{THEN}
+\textcommand{\ELSE}{ELSE}
+\textcommand{\Dom}{Dom }
+\textcommand{\Img}{Im }
+\newcommand{\STP}[1][n]{\text{STP}^{(#1)}}
+\newcommand{\SNAP}[1][n]{\text{SNAP}^{(#1)}}
 
 \overfullrule=2em
 
@@ -509,6 +514,42 @@ Demostrar que el siguiente predicado es primitivo recursivo:
 	\end{cases}
 \]
 
+Podemos simplemente escribirlo:
+\[
+	r(x) = \prod_{i=1}^{|x|} l(r(x[i])) > 2
+		\implies i < \min_{j \leq |x|}(l(x[j]) + 2 = l(x[i]))
+\]
 
+Cómo $l, r, \prod_i^k, >, <, \implies, \min_{t \leq y}, +, l[k], |l|$ e $=$ son
+primitivas recursivas y la función es una composición de primitivas recursivas
+entonces $r$ es primitiva recursiva.
+
+\subsection{Utilizando las funciones primitivas-recursivas $\STP$ y $\SNAP :
+\nat^{n+2} \to \nat$ vistas en clase, mostrar que las siguientes son funciones
+$\Scur$-parciales computables:}
+
+\begin{align*}
+	f_1(x, y) &=
+	\begin{cases}
+		1      & \text{si } y \in \Dom \Phi^{(1)}_x \\
+		\indef & \text{si no}
+	\end{cases} &
+	f_2(x) &=
+	\begin{cases}
+		1      & \text{si } \Dom \Phi^{(1)}_x \neq \emptyset \\
+		\indef & \text{si no}
+	\end{cases} \\
+	f_3(x, y) &=
+	\begin{cases}
+		1      & \text{si } y \in \Img \Phi^{(1)}_x \\
+		\indef & \text{si no}
+	\end{cases} &
+	f_4(x, y) &=
+	\begin{cases}
+		1      & \text{si } \Dom \Phi^{(1)}_x \cap \Img \Phi^{(1)}_y
+		                    \neq \emptyset \\
+		\indef & \text{si no}
+	\end{cases}
+\end{align*}
 
 \end{document}
