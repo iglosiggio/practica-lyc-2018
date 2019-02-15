@@ -96,7 +96,7 @@
 
 \subsection{Ejercicio 1}
 
-\subsubsection{Definir \emph{macros} para las siguientes pseudo---instrucciones
+\subsubsection{Definir \emph{macros} para las siguientes pseudo-instrucciones
 (con su interpretación natural) e indicar en cada caso qué etiquetas se asumen
 ``frescas''}
 
@@ -111,7 +111,7 @@
 			     & V_i \into V_i + 1
 		\end{align*}
 		Se toma sólo la etiqueta $R$ cómo fresca.
-	\item $V_i \into V_j + kl$
+	\item $V_i \into V_j + k$
 		\begin{align*}
 			     & V_i \into k \\
 			     & Z_a \into Z_a + 1 \\
@@ -141,6 +141,74 @@
 			     &IF\ Z_a \neq 0\ GOTO\ L \\
 		\end{align*}
 		Se toma sólo la variable $Z_a$ cómo fresca.
+\end{itemize}
+
+\subsubsection{Definir dos pseudo-programas distintos en el lenguaje $\Scur$
+(usando las macros convenientes del punto anterior) que computen la función de
+dos variables $f(x_1, x_y) = x_1 + x_2$. Par aalguno de los dos, expandir las
+macros utilizadas prestando atención a la instanciación de variables y
+etiquetas frescas.}
+
+\[
+	\begin{aligned}
+		     &Y   \into X_1 + 0 \\
+		     &GOTO\ B \\
+		[A]\ &Y   \into Y   + 1 \\
+		     &X_2 \into X_2 - 1 \\
+		[B]\ &IF\ X_2 \neq 0\ GOTO\ A
+	\end{aligned}
+	\hspace{6em}
+	\begin{aligned}\
+		[A]\ &IF\ X_1 = 0\ GOTO\ B \\
+		     &Y   \into Y   + 1 \\
+		     &X_1 \into X_1 - 1 \\
+		     &GOTO\ A \\
+		[B]\ &IF\ X_2 = 0\ GOTO\ E \\
+		     &Y   \into Y   + 1 \\
+		     &X_2 \into X_2 - 1 \\
+		     &GOTO\ B
+	\end{aligned}
+\]
+
+Vamos a expandir la segunda de las formulaciones (por ser la que tiene macros
+más simples).
+\begin{align*}
+	[A]\ &IF\ X_1 \neq 0\ GOTO\ Y \\
+	     &Z_1 \into Z_1 + 1 \\
+	     &IF\ Z_1 \neq 0\ GOTO\ B \\
+	[Y]\ &Z_1 \into Z_1 + 1 \\
+	     &Y   \into Y   + 1 \\
+	     &X_1 \into X_1 - 1 \\
+	     &Z_2 \into Z_2 + 1 \\
+	     &IF\ Z_2 \neq 0\ GOTO\ A \\
+	[B]\ &IF\ X_2 \neq 0\ GOTO\ Z \\
+	     &Z_3 \into Z_3 + 1 \\
+	     &IF\ Z_3 \neq 0\ GOTO\ E \\
+	[Z]\ &Z_3 \into Z_3 + 1 \\
+	     &Y   \into Y   + 1 \\
+	     &X_2 \into X_2 - 1 \\
+	     &Z_4 \into Z_4 + 1 \\
+	     &IF\ Z_4 \neq 0\ GOTO\ B \\
+\end{align*}
+
+\subsubsection{Sea $P$ el programa en $\Scur$ que resulta de expandir todas las
+macros en aguno de los códigos del punto anterior. Determinar cuál es la
+función computada en cada caso:}
+
+\begin{itemize}
+	\item $\Psi^{(1)}_P : \nat   \to \nat$
+		
+		$f(x) = x$, se puede ver fácil desde planteo del ejercicio
+		anterior, los parámetros no inicializados son ceros por lo que
+		la función pedida se instancia como  $f(x_1, 0) = x + 0$ y se
+		transforma nuestra suma en la función identidad.
+	\item $\Psi^{(2)}_P : \nat^2 \to \nat$
+
+		$f(x, y) = x + y$, la función pedida el ejercicio anterior.
+	\item $\Psi^{(3)}_P : \nat^3 \to \nat$
+
+		$f(x, y, z) = x + y$, dado que ignoramos el tercer parámetro en
+		ambas formulaciones del programa.
 \end{itemize}
 
 \end{document}
