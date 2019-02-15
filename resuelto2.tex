@@ -110,11 +110,37 @@
 			       \hspace{2em}k\ \text{veces} \\
 			     & V_i \into V_i + 1
 		\end{align*}
-
-		Se toma sólo la etiqueta $R$ cómo fresca
-	\item $V_i \into V_j + l$
+		Se toma sólo la etiqueta $R$ cómo fresca.
+	\item $V_i \into V_j + kl$
+		\begin{align*}
+			     & V_i \into k \\
+			     & Z_a \into Z_a + 1 \\
+			     & IF\ Z_a \neq 0\ GOTO\ C \\
+			[S]\ & V_j \into V_j - 1 \\
+			     & V_i \into V_i + 1 \\
+			     & Z_a \into Z_a + 1 \\
+			[C]\ & IF\ V_j \neq 0\ GOTO\ S \\
+			     & IF\ Z_a \neq 0\ GOTO\ F \\
+			[L]\ & V_j \into V_j + 1 \\
+			[F]\ & Z_a \into Z_a - 1 \\
+			     & IF\ Z_a \neq 0\ GOTO\ L
+		\end{align*}
+		Se toman las etiquetas $S$, $C$, $L$, $F$ y la variable
+		$Z_a$ cómo frescas.
 	\item $IF\ V_i = 0\ GOTO\ L$
+		\begin{align*}
+			     &IF\ V_i \neq 0\ GOTO\ C \\
+			     &Z_a \into Z_a + 1 \\
+			     &IF\ Z_a \neq 0\ GOTO\ L \\
+			[C]\ &Z_a \into Z_a + 1 \\
+		\end{align*}
+		Se toman la etiqueta $C$ y la variable $Z_a$ cómo frescas.
 	\item $GOTO\ L$
+		\begin{align*}
+			     &Z_a \into Z_a + 1 \\
+			     &IF\ Z_a \neq 0\ GOTO\ L \\
+		\end{align*}
+		Se toma sólo la variable $Z_a$ cómo fresca.
 \end{itemize}
 
 \end{document}
