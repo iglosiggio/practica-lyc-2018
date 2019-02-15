@@ -211,4 +211,63 @@ función computada en cada caso:}
 		ambas formulaciones del programa.
 \end{itemize}
 
+\subsection{Ejercicio 2}
+
+\subsubsection{Sea $\Ccur_\Scur = \{\Psi^{(n)}_P\ |\ P \text{\ es un programa
+en } S, n \geq 1\} $ la clase de funciones $\Scur$-parciales computables.
+Mostrar que $\Ccur_\Scur$ es una clase $PRC$}
+
+Para mostrar que es $PRC$ necesito dar un programa para las iniciales y
+demostrar que $\Ccur_\Scur$ está cerrado por composición y recursión primitiva.
+
+Vamos primero por las iniciales:
+\begin{align*}
+	&n(x) = 0 && s(x) = x + 1 && u^n_i(x_1, \dots, x_n) = x_i \\
+	&Z_1 \into Z_1 + 1
+	&&Y \into X_1 + 1
+	&&Y \into X_i + 0
+\end{align*}
+
+Y ahora veamos cómo resolver la composición, tomo $h : \nat^k \to \nat$ y
+$g_1, \dots, g_k : \nat^n \to \nat$ que pertenezcan a $\Ccur_\Scur$ (y por lo
+tanto tengan programas que podamos usar cómo macros):
+\begin{gather*}
+	f(x_1, \dots, x_n) = h(g_1(x_1, \dots, x_n), \dots,
+	                       g_k(x_1, \dots, x_n)) \\
+	\\
+	Z_1 \into g_1(X_1, \dots, X_n) \\
+	\hspace{1.8em} \vdots \\
+	Z_k \into g_k(X_1, \dots, X_n) \\
+	Y   \into h(Z_1, \dots, Z_k)
+\end{gather*}
+
+Para que esto funcione tenemos que restringir a cada macro a dejar sus
+variables de entrada intactas al finalizar su ejecución. Una forma de
+mecanizarlo es que cada macro copie todas sus variables de entrada a variables
+temporales ``frescas'' (que no se hayan usado ni se vayan a usar) y que cada
+macro designe como variable de salida una variable temporal ``fresca''. La
+única excepción a esto es el macro de asignación $V_i \into Expr$ que aunque el
+resultado de $Expr$ esté en una variable ``fresca'' debe modificar $V_i$ para
+cumplir con su tarea.
+
+Dicho todo esto, vamos por la recursión primitiva, la cuál es más simple de lo
+que parece, tomo $h : \nat^n \to \nat$ y $g : \nat^{n + 2} \to \nat$ que
+pertenezcan a $\Ccur_\Scur$ (¡Osea que tenemos programas!):
+\begin{gather*}
+	\begin{aligned}
+		f(x_1, \dots, x_n, 0)     &= h(x_1, \dots, x_n) \\
+		f(x_1, \dots, x_n, t + 1) &= g(f(x_1, \dots, x_n, t),
+					       x_1, \dots, x_n, t)
+	\end{aligned} \\
+	\\
+	\begin{aligned}
+		     &Y \into h(X_1, \dots, X_n) \\
+		[L]\ &IF\ X_{n+1}\ = 0\ GOTO\ E \\
+		     &Z_1 \into Z_1 + 1 \\
+		     &X_{n+1} \into X_{n+1} - 1 \\
+		     &Y \into g(Y, X_1, \dots, X_n, Z_1) \\
+		     &GOTO\ L
+	\end{aligned}
+\end{gather*}
+
 \end{document}
