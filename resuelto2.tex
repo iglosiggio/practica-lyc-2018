@@ -149,7 +149,7 @@ dos variables $f(x_1, x_y) = x_1 + x_2$. Par aalguno de los dos, expandir las
 macros utilizadas prestando atención a la instanciación de variables y
 etiquetas frescas.}
 
-\[
+\begin{align*}
 	\begin{aligned}
 		     &Y   \into X_1 + 0 \\
 		     &GOTO\ B \\
@@ -157,7 +157,7 @@ etiquetas frescas.}
 		     &X_2 \into X_2 - 1 \\
 		[B]\ &IF\ X_2 \neq 0\ GOTO\ A
 	\end{aligned}
-	\hspace{6em}
+	&&
 	\begin{aligned}\
 		[A]\ &IF\ X_1 = 0\ GOTO\ B \\
 		     &Y   \into Y   + 1 \\
@@ -168,7 +168,7 @@ etiquetas frescas.}
 		     &X_2 \into X_2 - 1 \\
 		     &GOTO\ B
 	\end{aligned}
-\]
+\end{align*}
 
 Vamos a expandir la segunda de las formulaciones (por ser la que tiene macros
 más simples).
