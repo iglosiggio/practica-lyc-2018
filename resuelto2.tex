@@ -374,4 +374,104 @@ $j(x) = \indef \forall x$ y reescribo $f(x)$ cómo una composición con $j(x)$.
 Y sólo me queda ofrecer el código de $j(x)$:
 \[[A]\ \GOTO\ A\]
 
+\subsection{}
+
+\subsubsection{Se definen las siguientes variantes del lenguaje $\Scur$:}
+
+\begin{itemize}
+	\item $\Scur_1$: Igual que $\Scur$ pero sin la instrucción
+	$V \into V + 1$
+	\item $\Scur_2$: Igual que $\Scur$ pero sin la instrucción
+	$\IF\ V \neq 0\ \GOTO\ L$
+	\item $\Scur_3$: Igual que $\Scur$ pero sin la instrucción
+	$V \into V \dot- 1$
+\end{itemize}
+
+Demostrar que para cada uno de estos lenguajes existe al menos una función
+$\Scur$-parcial computable que no es computable en este nuevo lenguaje.
+
+Para el primer caso podemos tomar $f(x) = 1$. Como $Y$ arranca valiendo $0$ y
+sólo podemos decrementarlo entonces no es posible hacer que le valor de $Y$
+supere el $0$ con las instrucciones que nos quedan.
+
+Para el segundo caso podemos tomar la función $f(x) = x$. Para hacer que el
+valor de $Y$ llegue a $x$ hay que ejecutar \emph{al menos} $x$ instrucciones.
+Dado que no tenemos ninguna forma de controlar el flujo del programa es obvio
+que todo programa en $\Scur_2$ siempre va a ejecutar la misma cantidad de
+instrucciones. Entonces finalmente podemos decir que para cualquier programa
+$P$ en $\Scur_2$ existe un $x$ mayor a su longitud (la cantida de de
+instrucciones). Por lo que no se puede construir un programa que sea $f(x) = x$
+para cualquier $x$. Otra respuesta posible (y más simple) era hablar de la
+función qué se indefine siempre. Cómo en $\Scur_2$ todos los programas tienen
+una cantida finita de instrucciones entonces todos son totales, el programa que
+se indefine para toda entrada no es construible.
+
+Para $\Scur_3$ notemos primero que al iniciar el programa todo el estado no
+inicializado ($X_n, X_{n+1}, \dots Y, Z_1, Z_2, Z_3, \dots$) toma el valor 0.
+Esto hace que todas esas variables no generen saltos en las instrucciones
+$\IF\ V \neq 0\ \GOTO\ L$. Podemos incrementarlas en $1$ y allí sólo van a
+producir saltos en esas instrucciones, pero una vez hecho esto no pueden
+\emph{dejar de hacerlo}. Por ende el flujo que toma el programa depende
+únicamente que si las variables de entrada son $0$ o son $> 0$. No existe forma
+de que una $V \neq 0$ en un tiempo $t$ pase a ser igual a $0$ en un tiempo
+$t + k$. Es decir, los programas en $\Scur_3$ dependen de cuáles de la
+finita cantidad de entradas que leen son $\neq 0$ pero no de los valores que
+ellas tienen. Es por esto que no puede construirse $f(x) = x$.
+
+\subsubsection{Sea $\Scur'$ el lenguaje de programación definido como $\Scur$
+salvo que sus instrucciones (etiquetadas o no) son de los siguientes tipos (con
+su interpretación antural):}
+\begin{gather*}
+	V \into V' \\
+	V \into V + 1 \\
+	\IF\ V \neq V'\ \GOTO\ L
+\end{gather*}
+Demostrar que una función es parcial computable en $\Scur'$ si y solo si lo es
+en $\Scur$.
+
+Cómo los lenguajes estos están cerrados por las instrucciones básicas y la
+secuencia alcanzaría con ofrecer macros que representen a las instrucciones
+básicas de c/u en el otro para mostrar su equivalencia.
+
+\begin{tabular}{l l}
+	$\Scur'$                    & Macro en $\Scur$ \\ \toprule
+	$V \into V'$                & $V \into V' + 0$ \\
+	$V \into V + 1$             & $V \into V  + 1$ \\
+	$\IF\ V \neq V'\ \GOTO\ L$  & $Z_a \into V \dot- V' + V' \dot- V$ \\
+	                            & $\IF\ Z_a \neq 0\ \GOTO\ L$ \\
+\end{tabular}
+
+\begin{tabular}{l l}
+	$\Scur$                     & Macro en $\Scur'$ \\ \toprule
+	$V \into V + 1$             & $V \into V + 1$ \\
+	$\IF\ V \neq 0\ \GOTO\ L$ & $\IF\ V \neq Z_a\ \GOTO\ L$ \\
+	$V \into V \dot- 1$         &
+	$\begin{aligned}
+		     &\IF Z_a \neq V\ \GOTO\ A \\
+		     &Z_a \into Z_a + 1 \\
+		     &\IF\ Z_a \neq V\ \GOTO\ E \\
+		[A]\ &Z_a \into Z_a + 1 \\
+		     &\IF\ Z_a \neq V\ \GOTO\ B \\
+		     &Z_a \into Z_a + 1 \\
+		     &\IF\ Z_a \neq V\ \GOTO\ E \\
+		[B]\ &Z_a \into Z_a + 1 \\
+		     &Z_b \into Z_b + 1 \\
+		     &\IF\ Z_a \neq V\ GOTO\ B \\
+		[E]\ &V \into Z_b
+	\end{aligned}$
+\end{tabular}
+
+\subsection{}
+
+\subsubsection{Demostrar que si $p : \nat^{n+1} \to \{0, 1\}$ es un predicado
+$\Scur$-computable (total), entonces es $\Scur$-parcial computable:}
+\[
+	\text{mínimoNA}_p(x_1, \dots, x_n, y) =
+	\begin{cases}
+		\min \{t | y \leq t \land p(x_1, \dots, x_n, t)\}
+			& \text{si existe algún } t \\
+		\indef & \text{en otro caso}
+	\end{cases}
+\]
+
 \end{document}
