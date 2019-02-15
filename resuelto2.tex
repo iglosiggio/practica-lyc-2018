@@ -495,4 +495,20 @@ similar a esto:
 Cómo sabemos que $f$ es total entonces siempre existe ese $t$ y $f^{-1}$
 resulta también total.
 
+\subsection{Un programa $P$ en el lenguaje $\Scur$ con instrucciones $I_1, I_2,
+\dots, I_n$ se dice \emph{optimista} si $\forall i = 1, \dots, n$, si $I_i$ es
+la instrucción $\IF\ V \neq 0\ \GOTO\ L$ entonces $L$ no aparece como etiqueta
+de ninguna instrucción $I_j$ con $j \leq i$.}
+
+Demostrar que el siguiente predicado es primitivo recursivo:
+\[
+	r(x) =
+	\begin{cases}
+		1 & \text{si el programa cuyo número es $x$ es optimista} \\
+		0 & \text{caso contrario}
+	\end{cases}
+\]
+
+
+
 \end{document}
