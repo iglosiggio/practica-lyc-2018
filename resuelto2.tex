@@ -610,19 +610,10 @@ función:
 	\end{cases}
 \]
 
-Para cualquier $n \in \nat$ constrimos la función unwrap$(l, e)$:
+Para cualquier $n \in \nat$ podemos construir $f_n$ así:
 \[
-	\text{unwrap}(l, e) = \Phi^{(n)}(l[1], l[2], \dots, l[n], e)
-\]
-Cómo unwrap es composición de funciones de $PRC$ que sabemos son parciales
-computables y tienen programas que las implementan entonces podemos afirmar que
-existe un programa $P$ que computa unwrap y tiene el número
-$e_{\text{unwrap}}$.
-
-Entonces ahora podemos enunciar $f_n$:
-\[
-	f_n(x) = \exists_{\langle t, l \rangle}\ r(\SNAP[2](l, x,
-		e_{\text{unwrap}}, t))[1] = x
+	f_n(x) = \exists_{\langle t, [x_1, \dots, x_n] \rangle}\
+		r(\SNAP(x_1, \dots, x_n, x, t))[1] = x
 \]
 
 \end{document}
