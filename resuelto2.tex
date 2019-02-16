@@ -564,4 +564,65 @@ Por simplicidad vamos utilizar el $\exists$ no acotado:
 		&\ \land j = r(\SNAP[1](k, x, t))[1] = j
 \end{align*}
 
+\subsection{Sea $f: \nat \to \nat$ una función $\Scur$-parcial computable en
+tiempo polinomial (i.e., existe un programa $P$, tal que $\Psi^{(1)}_P(x) =
+f(x)$ y tal que, para algún polinomio $Q(x)$, $P$, no requiere más que
+$Q(\lceil \log_2 x \rceil)$ pasos para terminar).}
+
+\subsubsection{Mostrar que $f$ es primitiva recursiva.}
+
+Si $P$ termina en $Q(\lceil \log_2 x \rceil)$ pasos entonces también lo hace en
+$Q(x)$ pasos. Cómo los poliniomios son sólo composición de primitivas
+recursivas (constantes, suma y exponenciación) podemos tomar el número de $P$,
+llamémoslo $e$ y definir $f$ sólo componiendo funciones primitivas recursivas.
+\[
+	f(x) = r(\SNAP[1](x, e, Q(x)))[1]
+\]
+
+\subsubsection{¿Sucede lo mismo si la cota es exponencial, doblemente
+exponencial, etc.?}
+
+Sí, si el tiempo que requiere un programa $P$ dada una entrada $y$ para
+terminar está acotado por una función primitiva recursiva entonces podemos
+aplicar el truco anterior siempre. Las exponenciales y doblemente exponenciales
+son primitvas recursivas (Prácica 1).
+
+\subsubsection{¿Qué podemos decir, en general, sobre la complejidad temporal de
+una función computable que no sea primitiva recursiva?}
+
+Que es mayor que la de cualquier primitiva recursiva, es decir las funciones
+que acotan el tiempo tampoco son primitivas recursivas y crecen más rápido que
+cualquier primitiva recursiva.
+
+\subsection{Se dice que un programa $P$ en el lenguaje $\Scur$ \emph{se pisa
+con $n$ entradas} si para alguna entrada $x_1, x_2, \dots, x_n$ y algún tiempo
+$t$, la variable de salida $Y$ luego de $t$ pasos de la ejecución de $P$, con
+entradas $x_1, x_2, \dots, x_n$ vale $\#P$.}
+
+Demostrar que para cualquier $n \in \nat$ es $\Scur$-parcial computable la
+función:
+\[
+	f_n(x) =
+	\begin{cases}
+		1      & \text{si el programa cuyo número es $x$ se pisa con
+		         $n$ entradas} \\
+		\indef & \text{caso contrario}
+	\end{cases}
+\]
+
+Para cualquier $n \in \nat$ constrimos la función unwrap$(l, e)$:
+\[
+	\text{unwrap}(l, e) = \Phi^{(n)}(l[1], l[2], \dots, l[n], e)
+\]
+Cómo unwrap es composición de funciones de $PRC$ que sabemos son parciales
+computables y tienen programas que las implementan entonces podemos afirmar que
+existe un programa $P$ que computa unwrap y tiene el número
+$e_{\text{unwrap}}$.
+
+Entonces ahora podemos enunciar $f_n$:
+\[
+	f_n(x) = \exists_{\langle t, l \rangle}\ \SNAP[2](l, x,
+		e_{\text{unwrap}}, t)
+\]
+
 \end{document}
