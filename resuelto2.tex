@@ -552,4 +552,16 @@ $\Scur$-parciales computables:}
 	\end{cases}
 \end{align*}
 
+Por simplicidad vamos utilizar el $\exists$ no acotado:
+\begin{align*}
+	\exists_t\ p(x_1, \dots, x_n) =&\ s(n(\min_t p(x_1, \dots, x_n, t))) \\
+	f_1(x, y) =&\ \exists_t\ \STP[1](y, x, t) \\
+	f_2(x)    =&\ \exists_{\langle t, y \rangle}\ \STP[1](y, x, t) \\
+	f_3(x, y) =&\ \exists_{\langle t, j \rangle}\ \STP[1](j, x, t)
+		\land r(\SNAP[1](j, x, t))[1] = y \\
+	f_4(x, y) =&\ \exists_{[j, k, t]}\ \STP[1](j, x, t)
+		\land \STP[1](k, x, t) \\
+		&\ \land j = r(\SNAP[1](k, x, t))[1] = j
+\end{align*}
+
 \end{document}
