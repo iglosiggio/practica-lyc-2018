@@ -74,7 +74,20 @@
 
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\Ccur}{\mathcal{C}}
-\newcommand{\indef}{\downarrow}
+\newcommand{\Scur}{\mathcal{S}}
+\newcommand{\indef}{\uparrow}
+\newcommand{\ddef}{\downarrow}
+\newcommand{\into}{\leftarrow}
+\newcommand{\textcommand}[2]{\newcommand{#1}{\text{#2}}}
+\textcommand{\IF}{IF}
+\textcommand{\GOTO}{GOTO}
+\textcommand{\WHILE}{WHILE}
+\textcommand{\THEN}{THEN}
+\textcommand{\ELSE}{ELSE}
+\textcommand{\Dom}{Dom }
+\textcommand{\Img}{Im }
+\newcommand{\STP}[1][n]{\text{STP}^{(#1)}}
+\newcommand{\SNAP}[1][n]{\text{SNAP}^{(#1)}}
 
 \overfullrule=2em
 
@@ -95,11 +108,61 @@
 \subsection{Probar, usando una diagonalización, que las siguientes funciones no
 son computables:}
 
-\subsubsection{$f_1(x,y)=
-\protect\begin{cases}
-	1 & \text{si } \Phi^{(1)}_x(y)\indef \\
-	0 & \text{en otro caso}
-\protect\end{cases}
-$}
+\begin{align*}
+	f_1(x, y) &=
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(y) \ddef \\
+		0 & \text{en otro caso}
+	\end{cases}
+	&f_3(x, y, z) &=
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(y) \ddef
+		    \land \Phi^{(1)}_x(y) > z \\
+		0 & \text{en otro caso}
+	\end{cases} \\
+	f_2(x, y) &=
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(y) = 0 \\
+		0 & \text{en otro caso}
+	\end{cases}
+	&f_4(x) &=
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(x) \ddef
+		    \text{y } \Phi^{(1)}_x(x) \neq x \\
+		0 & \text{en otro caso}
+	\end{cases}
+\end{align*}
+
+\subsubsection{$f_1(x, y)$}
+
+Si $f_1$ es computable entonces puedo construir el siguiente programa que lo
+la use a cuyo número llamaremos $e$:
+\[
+	[A]\ \IF\ f_1(X_1, X_1) \neq 0\ \GOTO\ A
+\]
+
+Luego intentemos determinar el valor de $f_1(e, e)$. Supongamos que $f_1(e, e)
+= 1$.
+\[
+	f_1(e, e) = 1
+	\iff \Phi^{(1)}_e(e) \ddef
+	\iff f_1(e, e) = 0
+\]
+
+\subsubsection{$f_2(x, y)$}
+
+Armemos de vuelta una función que sea molesta:
+\begin{align*}
+	[A]\ &\IF\ f_2(X_1, X_1) \neq 0\ \GOTO\ A \\
+	     &Y \into Y + 1
+\end{align*}
+
+E intentemos determinar el valor de $f_2(e, e)$ otra vez:
+\begin{gather*}
+	f_2(e, e) = 1 \iff \Phi^{(1)}_e(e) = 0 \\
+	f_2(e, e) = 0
+	\iff \Phi^{(1)}_e(e) \neq 0 \lor \Phi^{(1)}_e(e) \indef
+	\iff f_2(e, e) = 1 \lor f_2(e, e) \indef
+\end{gather*}
 
 \end{document}
