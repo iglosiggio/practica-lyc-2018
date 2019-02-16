@@ -141,8 +141,7 @@ la use a cuyo número llamaremos $e$:
 	[A]\ \IF\ f_1(X_1, X_1) \neq 0\ \GOTO\ A
 \]
 
-Luego intentemos determinar el valor de $f_1(e, e)$. Supongamos que $f_1(e, e)
-= 1$.
+Luego intentemos determinar el valor de $f_1(e, e)$:
 \[
 	f_1(e, e) = 1
 	\iff \Phi^{(1)}_e(e) \ddef
@@ -153,7 +152,7 @@ Luego intentemos determinar el valor de $f_1(e, e)$. Supongamos que $f_1(e, e)
 
 Armemos de vuelta una función que sea molesta:
 \begin{align*}
-	[A]\ &\IF\ f_2(X_1, X_1) \neq 0\ \GOTO\ A \\
+	[A]\ &\IF\ f_2(X_1, X_1) = 0\ \GOTO\ A \\
 	     &Y \into Y + 1
 \end{align*}
 
@@ -162,7 +161,7 @@ E intentemos determinar el valor de $f_2(e, e)$ otra vez:
 	f_2(e, e) = 1 \iff \Phi^{(1)}_e(e) = 0 \\
 	f_2(e, e) = 0
 	\iff \Phi^{(1)}_e(e) \neq 0 \lor \Phi^{(1)}_e(e) \indef
-	\iff f_2(e, e) = 1 \lor f_2(e, e) \indef
+	\iff f_2(e, e) \neq 0 \lor f_2(e, e) \indef
 \end{gather*}
 
 \end{document}
