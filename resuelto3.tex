@@ -117,7 +117,7 @@ son computables:}
 	&f_3(x, y, z) &=
 	\begin{cases}
 		1 & \text{si } \Phi^{(1)}_x(y) \ddef
-		    \land \Phi^{(1)}_x(y) > z \\
+		    \text{y } \Phi^{(1)}_x(y) > z \\
 		0 & \text{en otro caso}
 	\end{cases} \\
 	f_2(x, y) &=
@@ -163,5 +163,91 @@ E intentemos determinar el valor de $f_2(e, e)$ otra vez:
 	\iff \Phi^{(1)}_e(e) \neq 0 \lor \Phi^{(1)}_e(e) \indef
 	\iff f_2(e, e) \neq 0 \lor f_2(e, e) \indef
 \end{gather*}
+
+\subsubsection{$f_3(x, y, z)$}
+
+Cómo venimos haciendo empezamos por el ``programa rebelde'':
+\begin{align*}
+	[A]\ &\IF\ f_3(X_1, X_1, X_1) \neq 0\ \GOTO\ A \\
+	     &Y \into X_1 + 1
+\end{align*}
+
+Y intentamos ver que determinar el valor de $f_3(e, e, e)$ no tiene sentido:
+\begin{align*}
+	f_3(e, e, e) = 1
+	\iff& \Phi^{(1)}_e(e) \ddef \land\ \Phi^{(1)}_e(e) > e \\
+	\iff& f_3(e, e, e) = 0\ \land\ f_3(e, e, e) = 0 \\
+	\iff& f_3(e, e, e) = 0
+\end{align*}
+
+\subsubsection{$f_x(x)$}
+
+\begin{align*}
+	[A]\ &\IF\ f_4(X_1) \neq 0\ \GOTO\ A \\
+	     &Y \into X_1 + 1
+\end{align*}
+\begin{align*}
+	f_4(e) = 1
+	\iff& \Phi^{(1)}_e(e) \ddef \land\ \Phi^{(1)}_e(e) \neq e \\
+	\iff& f_4(e) = 0\ \land\ f_4(e) = 0 \iff f_4(e) = 0
+\end{align*}
+
+\subsection{Probar, reduciendo a cualquier función del ejercicio 1, que las
+siguiente funciones no son computables:}
+
+\begin{align*}
+	g_1(x, y) =&
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(y) \indef \\
+		0 & \text{en otro caso}
+	\end{cases} \\
+	g_2(x, y, z, w) =&
+	\begin{cases}
+		1 & \text{si } \Phi^{(1)}_x(z) \ddef \text{y }
+		    \Phi^{(1)}_y(w) \ddef \text{y }
+		    \Phi^{(1)}_x(z) > \Phi^{(1)}_y(w) \\
+		0 & \text{en otro caso}
+	\end{cases} \\
+	g_3(x, y, z) =&
+	\begin{cases}
+		z + 1 & \text{si } \Phi^{(1)}_x(y) \ddef \text{y }
+		        \Phi^{(1)}_x(y) \neq z \\
+		0     & \text{en otro caso}
+	\end{cases} \\
+	g_4(x, y, z) =&
+	\begin{cases}
+		(\Phi^{(1)}_x \circ \Phi^{(1)}_y)(z)
+		  & \text{si } \Phi^{(1)}_y(z) \ddef \text{y }
+		    (\Phi^{(1)}_x \circ \Phi^{(1)}_y)(z) \ddef \\
+		0 & \text{en otro caso}
+	\end{cases} \\
+\end{align*}
+
+\subsubsection{$g_1(x, y)$}
+
+\[
+	\alpha \circ g_1 = f_1
+\]
+
+\subsubsection{$g_2(x, y, z, w)$}
+
+Sea $e$ el número de un programa que computa la función identidad podemos decir:
+\[
+	g_2(x, e, y, z) = f_2(x, y, z)
+\]
+
+\subsubsection{$g_3(x, y, z)$}
+
+\[
+	s(n(g_3(x, x, x))) = f_4(x)
+\]
+
+\subsubsection{$g_4(x, y, z)$}
+
+Sea (otra vez) $e$ el número de un program que computa la función identidad
+podemos decir:
+\[
+	g_4(x, e, y) = f_1(x, y)
+\]
 
 \end{document}
