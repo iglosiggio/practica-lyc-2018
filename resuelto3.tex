@@ -239,7 +239,7 @@ Sea $e$ el número de un programa que computa la función identidad podemos deci
 \subsubsection{$g_3(x, y, z)$}
 
 \[
-	s(n(g_3(x, x, x))) = f_4(x)
+	\beta(g_3(x, x, x)) = f_4(x)
 \]
 
 \subsubsection{$g_4(x, y, z)$}
@@ -249,5 +249,27 @@ podemos decir:
 \[
 	g_4(x, e, y) = f_1(x, y)
 \]
+
+\subsection{Probar que la siguiente función no es computable reduciendo la
+función $f_4$ del primer ejercicio}
+
+\[
+	g_3'(x, y, z) =
+	\begin{cases}
+		z & \text{si } \Phi^{(1)}_x(y) \ddef \text{y }
+		    \Phi^{(1)}_x(y) \neq z \\
+		0 & \text{en otro caso}
+	\end{cases}
+\]
+\emph{Sugerencia}: Revisar que la reducción maneje correctamente el caso
+$f_4(0)$.
+
+No sé si esto está bien pero yo supondría que:
+\[
+	\beta(g_3'(x, x, x)) = f_4(x)
+\] 
+Dado que si $x = 0$ entonces $f_4(x) = 0$ y $g_4(x, x, x)$ es $0$
+independientemente de los casos de la función. Y en el resto de los valores de
+$x$ ambas funciones hacen lo mismo.
 
 \end{document}
