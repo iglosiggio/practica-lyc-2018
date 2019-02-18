@@ -268,8 +268,35 @@ No sé si esto está bien pero yo supondría que:
 \[
 	\beta(g_3'(x, x, x)) = f_4(x)
 \] 
-Dado que si $x = 0$ entonces $f_4(x) = 0$ y $g_4(x, x, x)$ es $0$
-independientemente de los casos de la función. Y en el resto de los valores de
-$x$ ambas funciones hacen lo mismo.
+Dado que $0$ es el programia vacío (una implementación de $n(x)$) entonces que
+$g_4(0, 0, 0) = 0$ se corresponde con el valor de $f_4(0)$. En el resto de los
+valores de $x$ es evidente que ambas funciones hacen lo mismo.
+
+\subsection{Decimos que una función parcial computable $f$ es \emph{extensible}
+si existe $g$ computable tal que $g(x) = f(x)$ para todo $x \in \Dom f$. Probar
+que existe una función parcial computable que no es extensible
+(\emph{Sugerencia}: considerar una función tal que con su extensión se podría
+computar alguna variante del halting problem).}
+\[
+	f(x) =
+	\begin{cases}
+		\Phi^{(1)}_x(x) & \text{si } \Phi^{(1)}_x(x) \ddef \\
+		\indef & \text{sino}
+	\end{cases}
+\]
+
+Si $f$ es extensible entonces existe un $g$ que puede calcular resultados para
+todo su dominio y devuelve ``basura'' para cualquier otro valor. Dado que $g$
+es computable podemos definir el siguiente programa y tomar su número $e$:
+\begin{align*}
+	[A]\ &\IF\ g(X_1) \neq X_1\ \GOTO\ A \\
+	     &Y \into X_1
+\end{align*}
+
+Ahora, ¿Cuál es el valor de $g(e)$?
+\begin{align*}
+	g(e) = e    \implies& g(e) \neq e \\
+	g(e) \neq e \implies& g(e) = e
+\end{align*}
 
 \end{document}
