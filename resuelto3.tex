@@ -287,18 +287,23 @@ Vamos a tomar la siguiente $f$ que suponemos extensible:
 	\end{cases}
 \]
 
-Cómo es extensible entonces existe un $g$ que puede calcular resultados para
+Como es extensible entonces existe un $g$ que puede calcular resultados para
 todo su dominio y devuelve ``basura'' para cualquier otro valor. Dado que $g$
 es computable podemos definir el siguiente programa y tomar su número $e$:
+\begin{gather*}
+	Y \into X_1 \\
+	\IF\ g(X_1) \neq X_1\ \GOTO\ E \\
+	Y \into Y + 1
+\end{gather*}
+
+Cómo $g$ es total entonces nuestro programa con número $e$ también lo es (por
+lo que $g(e) = f(e)$), entonces nos preguntamos: ¿Cuál es el valor de
+$\Phi^{(1)}_e(e)$? Sabemos que puede ser o bien $e$ o $e + 1$.
 \begin{align*}
-	[A]\ &\IF\ g(X_1) \neq X_1\ \GOTO\ A \\
-	     &Y \into X_1
+	\Phi^{(1)}_e(e) = e \iff g(e) \neq e \iff \Phi^{(1)}_e(e) \neq e \\
+	\Phi^{(1)}_e(e) = e + 1 \iff g(e) = e \iff \Phi^{(1)}_e(e) = e
 \end{align*}
 
-Ahora, ¿Cuál es el valor de $g(e)$?
-\begin{align*}
-	g(e) = e    \implies& g(e) \neq e \\
-	g(e) \neq e \implies& g(e) = e
-\end{align*}
+
 
 \end{document}
