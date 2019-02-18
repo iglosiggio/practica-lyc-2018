@@ -277,6 +277,8 @@ si existe $g$ computable tal que $g(x) = f(x)$ para todo $x \in \Dom f$. Probar
 que existe una función parcial computable que no es extensible
 (\emph{Sugerencia}: considerar una función tal que con su extensión se podría
 computar alguna variante del halting problem).}
+
+Vamos a tomar la siguiente $f$ que suponemos extensible:
 \[
 	f(x) =
 	\begin{cases}
@@ -285,7 +287,7 @@ computar alguna variante del halting problem).}
 	\end{cases}
 \]
 
-Si $f$ es extensible entonces existe un $g$ que puede calcular resultados para
+Cómo es extensible entonces existe un $g$ que puede calcular resultados para
 todo su dominio y devuelve ``basura'' para cualquier otro valor. Dado que $g$
 es computable podemos definir el siguiente programa y tomar su número $e$:
 \begin{align*}
