@@ -10,7 +10,6 @@ script:
   - mkdir build
   - make all
   - mv *.pdf index.html build
-  - echo lyc.mmme.ga > build/CNAME
 
 deploy:
   provider: pages
